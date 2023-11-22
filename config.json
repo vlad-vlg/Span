@@ -1,6 +1,6 @@
 {
   "host": "localhost",
   "database": "span",
-  "user": "root1",
+  "user": "root",
   "password": "root"
 }

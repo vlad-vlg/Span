@@ -30,3 +30,30 @@ VALUES ('Вера', 'Ивановна', 'Степанова', 1),
         ('Петр', 'Николаевич', 'Иванов', 2),
         ('Семен', 'Семенович', 'Сидоров', 2),
         ('Василий', 'Иванович', 'Петров', 3);
+
+DROP TABLE IF EXISTS `goods`;
+CREATE TABLE IF NOT EXISTS `goods` (
+  `goods_id` INT(11) NOT NULL AUTO_INCREMENT COMMENT 'Код товара',
+  `goods_category_id` INT(11) NOT NULL DEFAULT '0' COMMENT 'Код категории товара',
+  `goods` VARCHAR(255) NOT NULL DEFAULT '' COMMENT 'Название товара',
+  `price` DECIMAL(10,2) DEFAULT '0.00' COMMENT 'Цена товара',
+  PRIMARY KEY (`goods_id`)
+) ENGINE=INNODB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+
+DROP TABLE IF EXISTS `orders`;
+CREATE TABLE IF NOT EXISTS `orders` (
+  `order_id` INT(11) NOT NULL AUTO_INCREMENT COMMENT 'Код заказа',
+  `goods_id` INT(11) NOT NULL DEFAULT '0' COMMENT 'Код товара',
+  `quantity` INT(11) DEFAULT '1' COMMENT 'Количество товара',
+  `date_of_order` DATETIME DEFAULT '0000-00-00 00:00:00' COMMENT 'Дата заказа',
+  PRIMARY KEY (`order_id`)
+  ) ENGINE=INNODB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+
+INSERT INTO goods (goods_category_id, goods, price)
+VALUES (1, 'Электронная книга', 1000),
+        (2, 'Программа "Калькулятор"', 2000),
+        (3, 'Обновление программы', 500);
+
+INSERT INTO orders (goods_id, quantity, date_of_order)
+VALUES (1, 2, NOW()),
+        (2, 1, NOW());
