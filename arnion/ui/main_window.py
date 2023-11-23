@@ -1,6 +1,6 @@
 import tkinter as tk
-
 from arnion.db.mysql_connection import ConnectionHandler
+from arnion.data.departments_data import DepartmentDataHandler
 
 
 class MainWindow:
@@ -102,6 +102,9 @@ class MainWindow:
         print('Test')
         ch = ConnectionHandler()
         ch.do_test()
+        departments = DepartmentDataHandler.select_list()
+        for department in departments:
+            print(department.department_name)
 
     # Функция закрытия главного окна программы
     def close(self):
