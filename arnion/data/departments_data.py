@@ -6,6 +6,7 @@ class DepartmentDataObject:
         self.department_id = department_id
         self.department_name = department_name
 
+
 class DepartmentDataHandler:
     @staticmethod
     def select_list():

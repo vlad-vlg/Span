@@ -1,6 +1,7 @@
 from  mysql.connector import connect, connection, Error
 import json
 
+
 class ConnectionHandler:
     def __init__(self):
         self.read_from_config()
@@ -40,5 +41,6 @@ class ConnectionHandler:
             user=self.user,
             password=self.password,
         )
+
 
 my_connection_handler = ConnectionHandler()
