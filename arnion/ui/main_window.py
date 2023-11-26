@@ -2,6 +2,7 @@ import tkinter as tk
 from arnion.db.mysql_connection import ConnectionHandler
 from arnion.data.departments_data import DepartmentDataHandler
 from arnion.data.employees_data import EmployeeDataHandler
+from arnion.data.goods_data import GoodsDataHandler
 
 
 class MainWindow:
@@ -98,7 +99,7 @@ class MainWindow:
                               )
         btn_close.place(x=160, y=300, width=120, height=50)
 
-    # Функция закрытия главного окна программы
+    # Функция "Тест"
     def do_test(self):
         ch = ConnectionHandler()
         ch.do_test()
@@ -110,6 +111,10 @@ class MainWindow:
         employees = EmployeeDataHandler.select_list()
         for employee in employees:
             print(employee.get_full_name())
+        print('-' * 30)
+        goods = GoodsDataHandler.select_list()
+        for good in goods:
+            print(good.get_goods_price())
 
     # Функция закрытия главного окна программы
     def close(self):
