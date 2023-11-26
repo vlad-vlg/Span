@@ -4,6 +4,7 @@ from arnion.data.departments_data import DepartmentDataHandler
 from arnion.data.employees_data import EmployeeDataHandler
 from arnion.data.goods_data import GoodsDataHandler
 from arnion.data.orders_data import OrderDataHandler
+from arnion.ui.departments_reports_ui import DepartmentsReportWindow
 
 
 class MainWindow:
@@ -64,7 +65,8 @@ class MainWindow:
                                 bg='#ccffcc',
                                 bd=3,
                                 relief='raised',
-                                overrelief='groove'
+                                overrelief='groove',
+                                command=self.do_report_departments
                                 )
         btn_report3.place(x=25, y=200, width=120, height=50)
 
@@ -74,7 +76,8 @@ class MainWindow:
                                 bg='#ccffcc',
                                 bd=3,
                                 relief='raised',
-                                overrelief='groove'
+                                overrelief='groove',
+                                command=self.do_report_employees
                                 )
         btn_report4.place(x=160, y=200, width=120, height=50)
 
@@ -121,6 +124,15 @@ class MainWindow:
         print("Код товара", "Количество", "Дата заказа", sep='\t' * 2)
         for order in orders:
             print(order.goods_id, order.quantity, order.date_of_order, sep='\t' * 4)
+
+    # Открытие отчета "Отделы"
+    def do_report_departments(self):
+        rpt = DepartmentsReportWindow()
+        rpt.open()
+
+    # Открытие отчета "Сотрудники"
+    def do_report_employees(self):
+        pass
 
     # Функция закрытия главного окна программы
     def close(self):
