@@ -1,4 +1,4 @@
-from  mysql.connector import connect, connection, Error
+from mysql.connector import connect, connection, Error
 import json
 
 
@@ -32,7 +32,7 @@ class ConnectionHandler:
                     crs.fetchall()
             return True
         except Error as e:
-            return  False
+            return False
 
     def get_connection(self) -> connection:
         return connect(

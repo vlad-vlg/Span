@@ -3,6 +3,7 @@ from arnion.db.mysql_connection import ConnectionHandler
 from arnion.data.departments_data import DepartmentDataHandler
 from arnion.data.employees_data import EmployeeDataHandler
 from arnion.data.goods_data import GoodsDataHandler
+from arnion.data.orders_data import OrderDataHandler
 
 
 class MainWindow:
@@ -79,13 +80,13 @@ class MainWindow:
 
         # Добавление кнопки "Тест"
         btn_test = tk.Button(self.window, text='Тест',
-                              font=('Helvetica', 10, 'bold'),
-                              bg='#ffffcc',
-                              bd=3,
-                              relief='raised',
-                              overrelief='groove',
-                              command=self.do_test
-                              )
+                             font=('Helvetica', 10, 'bold'),
+                             bg='#ffffcc',
+                             bd=3,
+                             relief='raised',
+                             overrelief='groove',
+                             command=self.do_test
+                             )
         btn_test.place(x=25, y=300, width=120, height=50)
 
         # Добавление кнопки закрытия программы
@@ -115,6 +116,11 @@ class MainWindow:
         goods = GoodsDataHandler.select_list()
         for good in goods:
             print(good.get_goods_price())
+        print('-' * 30)
+        orders = OrderDataHandler.select_list()
+        print("Код товара", "Количество", "Дата заказа", sep='\t' * 2)
+        for order in orders:
+            print(order.goods_id, order.quantity, order.date_of_order, sep='\t' * 4)
 
     # Функция закрытия главного окна программы
     def close(self):

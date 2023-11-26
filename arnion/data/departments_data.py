@@ -1,4 +1,4 @@
-from  arnion.db.mysql_connection import my_connection_handler
+from arnion.db.mysql_connection import my_connection_handler
 
 
 class DepartmentDataObject:
