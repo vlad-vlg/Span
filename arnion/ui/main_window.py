@@ -122,7 +122,7 @@ class MainWindow:
                                 bd=3,
                                 relief='raised',
                                 overrelief='groove',
-                                command=self.do_report_employees
+                                command=self.do_report_orders
                                 )
         btn_report4.place(x=170, y=270, width=120, height=50)
 
