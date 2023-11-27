@@ -5,6 +5,7 @@ from arnion.data.employees_data import EmployeeDataHandler
 from arnion.data.goods_data import GoodsDataHandler
 from arnion.data.orders_data import OrderDataHandler
 from arnion.ui.departments_reports_ui import DepartmentsReportWindow
+from arnion.ui.employees_reports_ui import EmployeesReportWindow
 
 
 class MainWindow:
@@ -132,7 +133,8 @@ class MainWindow:
 
     # Открытие отчета "Сотрудники"
     def do_report_employees(self):
-        pass
+        rpt = EmployeesReportWindow()
+        rpt.open()
 
     # Функция закрытия главного окна программы
     def close(self):

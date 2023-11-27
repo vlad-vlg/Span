@@ -1,18 +1,18 @@
 import tkinter as tk
 from tkinter.scrolledtext import ScrolledText as st
 import os
-from arnion.data.departments_data import DepartmentDataHandler
+from arnion.data.employees_data import EmployeeDataHandler
 
 
-class DepartmentsReportWindow:
+class EmployeesReportWindow:
 
     def __init__(self):
         self.window = tk.Toplevel()
         self.window.geometry('500x450')
-        self.window.title('Отчет: Отделы')
+        self.window.title('Отчет: Сотрудники')
 
         # Добавление метки заголовка
-        lbl_title = tk.Label(self.window, text='Список отделов',
+        lbl_title = tk.Label(self.window, text='Список сотрудников',
                              font=('Helvetica', 16, 'bold'),
                              fg='#0000cc',
                              justify='center'
@@ -36,11 +36,17 @@ class DepartmentsReportWindow:
         self.btn_close.place(x=190, y=400, width=90, height=30)
 
     def get_report_text(self):
-        report_text = ' ' * 24 + 'Отделы' + os.linesep
+        report_text = ' ' * 17 + 'Сотрудники по отделам' + os.linesep
         report_text += '-' * 55 + os.linesep
-        data_rows = DepartmentDataHandler.select_list()
+        data_rows = EmployeeDataHandler.select_list_rpt()
+        current_department_name = '#-#-#'
         for data_row in data_rows:
-            report_text += data_row.department_name + os.linesep
+            # Если новый отдел, добавляется заголовок группы
+            if data_row.department_name != current_department_name:
+                report_text += data_row.department_name + os.linesep
+                current_department_name = data_row.department_name
+            # Добавляется запись
+            report_text += '\t' + data_row.get_full_name() + os.linesep
         return report_text
 
     def open(self):

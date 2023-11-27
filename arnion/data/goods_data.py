@@ -9,7 +9,7 @@ class GoodsDataObject:
         self.price = price
 
     def get_goods_price(self):
-        goods_price = self.goods + '    ' + str(self.price)
+        goods_price = self.goods + '\t' + str(self.price)
         return goods_price
 
 
