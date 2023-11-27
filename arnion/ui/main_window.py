@@ -6,13 +6,15 @@ from arnion.data.goods_data import GoodsDataHandler
 from arnion.data.orders_data import OrderDataHandler
 from arnion.ui.departments_reports_ui import DepartmentsReportWindow
 from arnion.ui.employees_reports_ui import EmployeesReportWindow
+from arnion.ui.goodts_reports_ui import GoodsReportWindow
+from arnion.ui.orders_reports_ui import OrdersReportWindow
 
 
 class MainWindow:
     # Конструктор
     def __init__(self):
         self.window = tk.Tk()
-        self.window.geometry('310x380')
+        self.window.geometry('330x430')
         self.window.title('SPAN')
         self.window.resizable(False, False)
 
@@ -22,7 +24,7 @@ class MainWindow:
                              fg='#0000cc',
                              justify='center'
                              )
-        lbl_title.place(x=25, y=15, width=250, height=50)
+        lbl_title.place(x=25, y=15, width=250, height=30)
 
         # Добавление метки заголовка данных
         lbl_title1 = tk.Label(text='Данные',
@@ -30,27 +32,47 @@ class MainWindow:
                               fg='#0066ff',
                               justify='center'
                               )
-        lbl_title1.place(x=25, y=55, width=250, height=50)
+        lbl_title1.place(x=25, y=40, width=120, height=50)
 
         # Добавление кнопки данных "Отделы"
-        btn_report1 = tk.Button(self.window, text='Отделы',
-                                font=('Helvetica', 10, 'bold'),
-                                bg='#ccffcc',
-                                bd=3,
-                                relief='raised',
-                                overrelief='groove'
-                                )
-        btn_report1.place(x=25, y=100, width=120, height=50)
+        btn_data1 = tk.Button(self.window, text='Отделы',
+                              font=('Helvetica', 10, 'bold'),
+                              bg='#ccffcc',
+                              bd=3,
+                              relief='raised',
+                              overrelief='groove'
+                              )
+        btn_data1.place(x=25, y=90, width=120, height=50)
 
         # Добавление кнопки данных "Сотрудники"
-        btn_report2 = tk.Button(self.window, text='Сотрудники',
-                                font=('Helvetica', 10, 'bold'),
-                                bg='#ccffcc',
-                                bd=3,
-                                relief='raised',
-                                overrelief='groove'
-                                )
-        btn_report2.place(x=160, y=100, width=120, height=50)
+        btn_data2 = tk.Button(self.window, text='Сотрудники',
+                              font=('Helvetica', 10, 'bold'),
+                              bg='#ccffcc',
+                              bd=3,
+                              relief='raised',
+                              overrelief='groove'
+                              )
+        btn_data2.place(x=25, y=150, width=120, height=50)
+
+        # Добавление кнопки данных "Товары"
+        btn_data3 = tk.Button(self.window, text='Товары',
+                              font=('Helvetica', 10, 'bold'),
+                              bg='#ccffcc',
+                              bd=3,
+                              relief='raised',
+                              overrelief='groove'
+                              )
+        btn_data3.place(x=25, y=210, width=120, height=50)
+
+        # Добавление кнопки данных "Заказы"
+        btn_data4 = tk.Button(self.window, text='Заказы',
+                              font=('Helvetica', 10, 'bold'),
+                              bg='#ccffcc',
+                              bd=3,
+                              relief='raised',
+                              overrelief='groove'
+                              )
+        btn_data4.place(x=25, y=270, width=120, height=50)
 
         # Добавление метки заголовка отчетов
         lbl_title2 = tk.Label(text='Отчеты',
@@ -58,10 +80,10 @@ class MainWindow:
                               fg='#0066ff',
                               justify='center'
                               )
-        lbl_title2.place(x=25, y=155, width=250, height=50)
+        lbl_title2.place(x=170, y=40, width=120, height=50)
 
         # Добавление кнопки отчетов "Отделы"
-        btn_report3 = tk.Button(self.window, text='Отделы',
+        btn_report1 = tk.Button(self.window, text='Отделы',
                                 font=('Helvetica', 10, 'bold'),
                                 bg='#ccffcc',
                                 bd=3,
@@ -69,10 +91,10 @@ class MainWindow:
                                 overrelief='groove',
                                 command=self.do_report_departments
                                 )
-        btn_report3.place(x=25, y=200, width=120, height=50)
+        btn_report1.place(x=170, y=90, width=120, height=50)
 
         # Добавление кнопки отчетов "Сотрудники"
-        btn_report4 = tk.Button(self.window, text='Сотрудники',
+        btn_report2 = tk.Button(self.window, text='Сотрудники',
                                 font=('Helvetica', 10, 'bold'),
                                 bg='#ccffcc',
                                 bd=3,
@@ -80,7 +102,29 @@ class MainWindow:
                                 overrelief='groove',
                                 command=self.do_report_employees
                                 )
-        btn_report4.place(x=160, y=200, width=120, height=50)
+        btn_report2.place(x=170, y=150, width=120, height=50)
+
+        # Добавление кнопки отчетов "Товары"
+        btn_report3 = tk.Button(self.window, text='Товары',
+                                font=('Helvetica', 10, 'bold'),
+                                bg='#ccffcc',
+                                bd=3,
+                                relief='raised',
+                                overrelief='groove',
+                                command=self.do_report_goods
+                                )
+        btn_report3.place(x=170, y=210, width=120, height=50)
+
+        # Добавление кнопки отчетов "Заказы"
+        btn_report4 = tk.Button(self.window, text='Заказы',
+                                font=('Helvetica', 10, 'bold'),
+                                bg='#ccffcc',
+                                bd=3,
+                                relief='raised',
+                                overrelief='groove',
+                                command=self.do_report_employees
+                                )
+        btn_report4.place(x=170, y=270, width=120, height=50)
 
         # Добавление кнопки "Тест"
         btn_test = tk.Button(self.window, text='Тест',
@@ -91,7 +135,7 @@ class MainWindow:
                              overrelief='groove',
                              command=self.do_test
                              )
-        btn_test.place(x=25, y=300, width=120, height=50)
+        btn_test.place(x=25, y=360, width=120, height=40)
 
         # Добавление кнопки закрытия программы
         btn_close = tk.Button(self.window, text='Выход',
@@ -102,7 +146,7 @@ class MainWindow:
                               overrelief='groove',
                               command=self.close
                               )
-        btn_close.place(x=160, y=300, width=120, height=50)
+        btn_close.place(x=170, y=360, width=120, height=40)
 
     # Функция "Тест"
     def do_test(self):
@@ -134,6 +178,16 @@ class MainWindow:
     # Открытие отчета "Сотрудники"
     def do_report_employees(self):
         rpt = EmployeesReportWindow()
+        rpt.open()
+
+    # Открытие отчета "Товары"
+    def do_report_goods(self):
+        rpt = GoodsReportWindow()
+        rpt.open()
+
+    # Открытие отчета "Заказы"
+    def do_report_orders(self):
+        rpt = OrdersReportWindow()
         rpt.open()
 
     # Функция закрытия главного окна программы
