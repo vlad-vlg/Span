@@ -1,6 +1,6 @@
 import tkinter as tk
 from arnion.db.mysql_connection import ConnectionHandler
-from arnion.data.departments_data import DepartmentDataHandler
+from arnion.data.departments_data import DepartmentDataHandler, DepartmentDataObject
 from arnion.data.employees_data import EmployeeDataHandler
 from arnion.data.goods_data import GoodsDataHandler
 from arnion.data.orders_data import OrderDataHandler
@@ -169,6 +169,22 @@ class MainWindow:
         print("Код товара", "Количество", "Дата заказа", sep='\t' * 2)
         for order in orders:
             print(order.goods_id, order.quantity, order.date_of_order, sep='\t' * 4)
+        print('-' * 30)
+        # DepartmentDataHandler.delete_by_id(4)
+        # print('Готово!')
+        print('-' * 30)
+        department = DepartmentDataHandler.select_by_id(3)
+        print(department.department_name)
+        department.department_name = "Отдел по работе с клиентами"
+        print(department.department_name)
+        DepartmentDataHandler.update(department)
+        print('Готово!')
+        print('-' * 30)
+        department = DepartmentDataObject(department_name='Отдел тестирования')
+        print(department.department_id)
+        DepartmentDataHandler.insert(department)
+        print(department.department_id)
+        print('Готово!')
 
     # Открытие отчета "Отделы"
     def do_report_departments(self):

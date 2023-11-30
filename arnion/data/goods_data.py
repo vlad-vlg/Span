@@ -36,7 +36,7 @@ class GoodsDataHandler:
                 select_query = "SELECT * FROM goods WHERE goods_id=" + str(goods_id)
                 with cnn.cursor() as cursor:
                     cursor.execute(select_query)
-                    row = cursor.fetchall()
+                    row = cursor.fetchone()
                     goods = GoodsDataHandler.get_goods(row)
                     return goods
         except:

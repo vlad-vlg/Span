@@ -40,7 +40,7 @@ class OrderDataHandler:
                 select_query = "SELECT * FROM orders WHERE order_id=" + str(order_id)
                 with cnn.cursor() as cursor:
                     cursor.execute(select_query)
-                    row = cursor.fetchall()
+                    row = cursor.fetchone()
                     order = OrderDataHandler.get_order(row)
                     return order
         except:

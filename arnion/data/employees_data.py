@@ -43,7 +43,7 @@ class EmployeeDataHandler:
                 select_query = "SELECT * FROM employees WHERE employee_id=" + str(employee_id)
                 with cnn.cursor() as cursor:
                     cursor.execute(select_query)
-                    row = cursor.fetchall()
+                    row = cursor.fetchone()
                     employee = EmployeeDataHandler.get_employee(row)
                     return employee
         except:
