@@ -1,7 +1,7 @@
 import tkinter as tk
 from arnion.db.mysql_connection import ConnectionHandler
 from arnion.data.departments_data import DepartmentDataHandler, DepartmentDataObject
-from arnion.data.employees_data import EmployeeDataHandler
+from arnion.data.employees_data import EmployeeDataHandler, EmployeeDataObject
 from arnion.data.goods_data import GoodsDataHandler
 from arnion.data.orders_data import OrderDataHandler
 from arnion.ui.departments_reports_ui import DepartmentsReportWindow
@@ -170,20 +170,23 @@ class MainWindow:
         for order in orders:
             print(order.goods_id, order.quantity, order.date_of_order, sep='\t' * 4)
         print('-' * 30)
-        # DepartmentDataHandler.delete_by_id(4)
+        # EmployeeDataHandler.delete_by_id(4)
+        # print('Готово!')
+        # print('-' * 30)
+        # employee = EmployeeDataHandler.select_by_id(4)
+        # print(employee.get_full_name())
+        # employee.first_name = "Федор"
+        # print(employee.get_full_name())
+        #  EmployeeDataHandler.update(employee)
         # print('Готово!')
         print('-' * 30)
-        department = DepartmentDataHandler.select_by_id(3)
-        print(department.department_name)
-        department.department_name = "Отдел по работе с клиентами"
-        print(department.department_name)
-        DepartmentDataHandler.update(department)
-        print('Готово!')
-        print('-' * 30)
-        department = DepartmentDataObject(department_name='Отдел тестирования')
-        print(department.department_id)
-        DepartmentDataHandler.insert(department)
-        print(department.department_id)
+        employee = EmployeeDataObject(first_name='Иван',
+                                      middle_name='Васильевич',
+                                      last_name='Грозный',
+                                      department_id=4)
+        print(employee.employee_id)
+        EmployeeDataHandler.insert(employee)
+        print(employee.employee_id)
         print('Готово!')
 
     # Открытие отчета "Отделы"

@@ -75,3 +75,42 @@ class EmployeeDataHandler:
     @staticmethod
     def get_employee_rpt(row):
         return EmployeeRptDataObject(row[0], row[1], row[2], row[3], row[4], row[5])
+
+    @staticmethod
+    def delete_by_id(employee_id: int):
+        try:
+            with my_connection_handler.get_connection() as cnn:
+                insert_query = "DELETE FROM employees WHERE employee_id=" + str(employee_id)
+                with cnn.cursor() as cursor:
+                    cursor.execute(insert_query)
+        except:
+            raise
+
+    @staticmethod
+    def update(employee: EmployeeDataObject):
+        try:
+            with my_connection_handler.get_connection() as cnn:
+                insert_query = "UPDATE employees SET " \
+                                "first_name='" + employee.first_name + "', "\
+                                "middle_name='" + employee.middle_name + "', "\
+                                "last_name='" + employee.last_name + "', "\
+                                "department_id=" + str(employee.department_id) + " "\
+                                + "WHERE employee_id=" + str(employee.employee_id)
+                with cnn.cursor() as cursor:
+                    cursor.execute(insert_query)
+        except:
+            raise
+
+    @staticmethod
+    def insert(employee: EmployeeDataObject):
+        try:
+            with my_connection_handler.get_connection() as cnn:
+                insert_query = "INSERT INTO employees (first_name, middle_name, last_name, department_id) "\
+                               "VALUES ('"\
+                               + employee.first_name + "', '" + employee.middle_name + "', '"\
+                               + employee.last_name + "', " + str(employee.department_id) + ")"
+                with cnn.cursor() as cursor:
+                    cursor.execute(insert_query)
+                    employee.employee_id = cursor.lastrowid
+        except:
+            raise
