@@ -11,10 +11,10 @@ class OrderDataObject:
 
 class OrderRptDataObject(OrderDataObject):
     def __init__(self, order_id=0, goods_id=0, quantity=1, date_of_order='0000-00-00 00:00:00',
-                 goods_category_id=0, goods='', price=0.00):
+                 goods_category_id=0, goods_name='', price=0.00):
         super().__init__(order_id, goods_id, quantity, date_of_order)
         self.goods_category_id = goods_category_id
-        self.goods = goods
+        self.goods_name = goods_name
         self.price = price
 
 class OrderDataHandler:
@@ -55,11 +55,11 @@ class OrderDataHandler:
         orders = []
         try:
             with my_connection_handler.get_connection() as cnn:
-                select_query = "SELECT g.goods_category_id, g.goods, g.price, o.* "\
+                select_query = "SELECT g.goods_category_id, g.goods_name, g.price, o.* "\
                         "FROM orders o "\
                         "LEFT JOIN goods g "\
                         "ON o.goods_id = g.goods_id "\
-                        "ORDER BY goods_category_id, goods"
+                        "ORDER BY goods_category_id, goods_name"
                 with cnn.cursor() as cursor:
                     cursor.execute(select_query)
                     result = cursor.fetchall()

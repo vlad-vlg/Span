@@ -40,7 +40,7 @@ class GoodsReportWindow:
         report_text += '-' * 55 + os.linesep
         data_rows = GoodsDataHandler.select_list()
         for data_row in data_rows:
-            report_text += data_row.goods + os.linesep
+            report_text += data_row.goods_name + os.linesep
         return report_text
 
     def open(self):

@@ -48,7 +48,7 @@ class OrdersReportWindow:
                 report_text += str(data_row.goods_category_id) + os.linesep
                 current_goods_category_id = data_row.goods_category_id
             # Добавляется запись
-            report_text += '\t' + str(data_row.goods_id) + '\t' * 4 + str(data_row.goods) + '\t' + str(data_row.quantity * data_row.goods) + os.linesep
+            report_text += '\t' + str(data_row.goods_id) + '\t' * 4 + str(data_row.goods_name) + '\t' + str(data_row.quantity * data_row.goods_name) + os.linesep
         return report_text
 
     def open(self):

@@ -2,7 +2,7 @@ import tkinter as tk
 from arnion.db.mysql_connection import ConnectionHandler
 from arnion.data.departments_data import DepartmentDataHandler, DepartmentDataObject
 from arnion.data.employees_data import EmployeeDataHandler, EmployeeDataObject
-from arnion.data.goods_data import GoodsDataHandler
+from arnion.data.goods_data import GoodsDataHandler, GoodsDataObject
 from arnion.data.orders_data import OrderDataHandler
 from arnion.ui.departments_reports_ui import DepartmentsReportWindow
 from arnion.ui.employees_reports_ui import EmployeesReportWindow
@@ -170,23 +170,22 @@ class MainWindow:
         for order in orders:
             print(order.goods_id, order.quantity, order.date_of_order, sep='\t' * 4)
         print('-' * 30)
-        # EmployeeDataHandler.delete_by_id(4)
-        # print('Готово!')
-        # print('-' * 30)
-        # employee = EmployeeDataHandler.select_by_id(4)
-        # print(employee.get_full_name())
-        # employee.first_name = "Федор"
-        # print(employee.get_full_name())
-        #  EmployeeDataHandler.update(employee)
-        # print('Готово!')
+        GoodsDataHandler.delete_by_id(1)
+        print('Готово!')
         print('-' * 30)
-        employee = EmployeeDataObject(first_name='Иван',
-                                      middle_name='Васильевич',
-                                      last_name='Грозный',
-                                      department_id=4)
-        print(employee.employee_id)
-        EmployeeDataHandler.insert(employee)
-        print(employee.employee_id)
+        goods_x = GoodsDataHandler.select_by_id(3)
+        print(goods_x.goods_name)
+        goods_x.goods_name = "Обновление программы SPAN"
+        print(goods_x.goods_name)
+        GoodsDataHandler.update(goods_x)
+        print('Готово!')
+        print('-' * 30)
+        goods_x = GoodsDataObject(goods_category_id=2,
+                                  goods_name="Программа SPAN",
+                                  price=3000.00)
+        print(goods_x.goods_id)
+        GoodsDataHandler.insert(goods_x)
+        print(goods_x.goods_id)
         print('Готово!')
 
     # Открытие отчета "Отделы"
