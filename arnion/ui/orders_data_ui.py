@@ -98,7 +98,7 @@ class OrdersWindow:
     def init_data_rows(self):
         self.data_rows = OrderDataHandler.select_list()
         for data_rows in self.data_rows:
-            self.lbox_data_rows.insert('end', data_rows.order_id + '\t' + data_rows.date_of_order)
+            self.lbox_data_rows.insert('end', str(data_rows.order_id) + ' - ' + str(data_rows.date_of_order))
         if len(self.data_rows) > 0:
             self.lbox_data_rows.select_set(0)
 
@@ -121,7 +121,7 @@ class OrdersWindow:
     # Функция удаления записи
     def delete_record(self):
         answer = mb.askokcancel(parent=self.window, title='Подтверждение',
-                             message='Вы действительно хотите удалить запись?')
+                                message='Вы действительно хотите удалить запись?')
         if not answer:
             return
         self.selection = self.lbox_data_rows.curselection()[0]

@@ -121,7 +121,7 @@ class GoodsWindow:
     # Функция удаления записи
     def delete_record(self):
         answer = mb.askokcancel(parent=self.window, title='Подтверждение',
-                             message='Вы действительно хотите удалить запись?')
+                                message='Вы действительно хотите удалить запись?')
         if not answer:
             return
         self.selection = self.lbox_data_rows.curselection()[0]
