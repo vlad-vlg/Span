@@ -10,6 +10,7 @@ class EmployeesReportWindow:
         self.window = tk.Toplevel()
         self.window.geometry('500x450')
         self.window.title('Отчет: Сотрудники')
+        self.window.resizable(False, False)
 
         # Добавление метки заголовка
         lbl_title = tk.Label(self.window, text='Список сотрудников',

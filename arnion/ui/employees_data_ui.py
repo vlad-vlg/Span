@@ -1,20 +1,20 @@
 import tkinter as tk
 from tkinter import messagebox as mb
 import copy
-from arnion.data.departments_data import DepartmentDataHandler, DepartmentDataObject
+from arnion.data.employees_data import EmployeeDataHandler, EmployeeDataObject
 
 
-class DepartmentsWindow:
+class EmployeesWindow:
     # Конструктор
     def __init__(self):
         self.window = tk.Toplevel()
         self.window.geometry('500x435')
-        self.window.title('Отделы')
+        self.window.title('Сотрудники')
         self.window.resizable(False, False)
 
         # Добавление метки заголовка
         lbl_title = tk.Label(self.window,
-                             text='Список отделов',
+                             text='Список сотрудников',
                              font=('Helvetica', 16, 'bold'),
                              fg='#0000cc',
                              justify='center'
@@ -89,9 +89,9 @@ class DepartmentsWindow:
 
     # Функция заполнения списка
     def init_data_rows(self):
-        self.data_rows = DepartmentDataHandler.select_list()
+        self.data_rows = EmployeeDataHandler.select_list()
         for data_rows in self.data_rows:
-            self.lbox_data_rows.insert('end', data_rows.department_name)
+            self.lbox_data_rows.insert('end', data_rows.get_full_name())
         if len(self.data_rows) > 0:
             self.lbox_data_rows.select_set(0)
 
@@ -100,7 +100,7 @@ class DepartmentsWindow:
         pass
 
     # Функция завершения добавления записи
-    def add_record_callback(self, added_data_row: DepartmentDataObject):
+    def add_record_callback(self, added_data_row: EmployeeDataObject):
         pass
 
     # Функция редактирования записи
@@ -108,7 +108,7 @@ class DepartmentsWindow:
         pass
 
     # Функция завершения редактирования записи
-    def edit_record_callback(self, edited_data_row: DepartmentDataObject):
+    def edit_record_callback(self, edited_data_row: EmployeeDataObject):
         pass
 
     # Функция удаления записи
@@ -119,7 +119,7 @@ class DepartmentsWindow:
             return
         self.selection = self.lbox_data_rows.curselection()[0]
         id = self.data_rows[self.selection].department_id
-        DepartmentDataHandler.delete_by_id(id)
+        EmployeeDataHandler.delete_by_id(id)
         self.data_rows.pop(self.selection)
         self.lbox_data_rows.delete(self.selection)
 

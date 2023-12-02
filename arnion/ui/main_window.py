@@ -4,7 +4,9 @@ from arnion.data.departments_data import DepartmentDataHandler, DepartmentDataOb
 from arnion.data.employees_data import EmployeeDataHandler, EmployeeDataObject
 from arnion.data.goods_data import GoodsDataHandler, GoodsDataObject
 from arnion.data.orders_data import OrderDataHandler
+from arnion.ui.departments_data_ui import DepartmentsWindow
 from arnion.ui.departments_reports_ui import DepartmentsReportWindow
+from arnion.ui.employees_data_ui import EmployeesWindow
 from arnion.ui.employees_reports_ui import EmployeesReportWindow
 from arnion.ui.goodts_reports_ui import GoodsReportWindow
 from arnion.ui.orders_reports_ui import OrdersReportWindow
@@ -40,7 +42,8 @@ class MainWindow:
                               bg='#ccffcc',
                               bd=3,
                               relief='raised',
-                              overrelief='groove'
+                              overrelief='groove',
+                              command=self.do_list_departments
                               )
         btn_data1.place(x=25, y=90, width=120, height=50)
 
@@ -50,7 +53,8 @@ class MainWindow:
                               bg='#ccffcc',
                               bd=3,
                               relief='raised',
-                              overrelief='groove'
+                              overrelief='groove',
+                              command=self.do_list_employees
                               )
         btn_data2.place(x=25, y=150, width=120, height=50)
 
@@ -170,7 +174,7 @@ class MainWindow:
         for order in orders:
             print(order.goods_id, order.quantity, order.date_of_order, sep='\t' * 4)
         print('-' * 30)
-        GoodsDataHandler.delete_by_id(1)
+        OrderDataHandler.delete_by_id(1)
         print('Готово!')
         print('-' * 30)
         goods_x = GoodsDataHandler.select_by_id(3)
@@ -187,6 +191,16 @@ class MainWindow:
         GoodsDataHandler.insert(goods_x)
         print(goods_x.goods_id)
         print('Готово!')
+
+    # Открытие списка "Отделы"
+    def do_list_departments(self):
+        rpt = DepartmentsWindow()
+        rpt.open()
+
+    # Открытие списка "Сотрудники"
+    def do_list_employees(self):
+        rpt = EmployeesWindow()
+        rpt.open()
 
     # Открытие отчета "Отделы"
     def do_report_departments(self):

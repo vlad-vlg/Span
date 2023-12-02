@@ -10,12 +10,13 @@ class OrderDataObject:
 
 
 class OrderRptDataObject(OrderDataObject):
-    def __init__(self, order_id=0, goods_id=0, quantity=1, date_of_order='0000-00-00 00:00:00',
-                 goods_category_id=0, goods_name='', price=0.00):
+    def __init__(self, order_id=0, goods_id=0, quantity=1, date_of_order='0000-00-00 00:00:00', goods_category_id=0,
+                 goods_name='', price=0.00):
         super().__init__(order_id, goods_id, quantity, date_of_order)
         self.goods_category_id = goods_category_id
         self.goods_name = goods_name
         self.price = price
+
 
 class OrderDataHandler:
     @staticmethod
@@ -55,11 +56,11 @@ class OrderDataHandler:
         orders = []
         try:
             with my_connection_handler.get_connection() as cnn:
-                select_query = "SELECT g.goods_category_id, g.goods_name, g.price, o.* "\
-                        "FROM orders o "\
-                        "LEFT JOIN goods g "\
-                        "ON o.goods_id = g.goods_id "\
-                        "ORDER BY goods_category_id, goods_name"
+                select_query = "SELECT g.goods_category_id, g.goods_name, g.price, o.* " \
+                               "FROM orders o " \
+                               "LEFT JOIN goods g " \
+                               "ON o.goods_id = g.goods_id " \
+                               "ORDER BY goods_category_id, goods_name"
                 with cnn.cursor() as cursor:
                     cursor.execute(select_query)
                     result = cursor.fetchall()
@@ -72,3 +73,13 @@ class OrderDataHandler:
     @staticmethod
     def get_order_rpt(row):
         return OrderRptDataObject(row[0], row[1], row[2], row[3], row[4], row[5], row[6])
+
+    @staticmethod
+    def delete_by_id(order_id: int):
+        try:
+            with my_connection_handler.get_connection() as cnn:
+                insert_query = "DELETE FROM orders WHERE order_id=" + str(order_id)
+                with cnn.cursor() as cursor:
+                    cursor.execute(insert_query)
+        except:
+            raise
