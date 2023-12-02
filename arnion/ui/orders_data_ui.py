@@ -1,19 +1,19 @@
 import tkinter as tk
 from tkinter import messagebox as mb
-from arnion.data.employees_data import EmployeeDataHandler, EmployeeDataObject
+from arnion.data.orders_data import OrderDataHandler, OrderDataObject
 
 
-class EmployeesWindow:
+class OrdersWindow:
     # Конструктор
     def __init__(self):
         self.window = tk.Toplevel()
         self.window.geometry('500x435')
-        self.window.title('Сотрудники')
+        self.window.title('Заказы')
         self.window.resizable(False, False)
 
         # Добавление метки заголовка
         lbl_title = tk.Label(self.window,
-                             text='Список сотрудников',
+                             text='Список заказов',
                              font=('Helvetica', 16, 'bold'),
                              fg='#0000cc',
                              justify='center'
@@ -28,8 +28,7 @@ class EmployeesWindow:
                                          bd=2,
                                          selectmode='single',
                                          activestyle='none',
-                                         font=('Courier New', 10, 'bold'),
-                                         bg='#dfefef'
+                                         font=('Courier New', 10, 'bold')
                                          )
         self.scrollbar = tk.Scrollbar(self.frame, orient='vertical')
         self.scrollbar.config(command=self.lbox_data_rows.yview)
@@ -97,9 +96,9 @@ class EmployeesWindow:
 
     # Функция заполнения списка
     def init_data_rows(self):
-        self.data_rows = EmployeeDataHandler.select_list()
+        self.data_rows = OrderDataHandler.select_list()
         for data_rows in self.data_rows:
-            self.lbox_data_rows.insert('end', data_rows.get_full_name())
+            self.lbox_data_rows.insert('end', data_rows.order_id + '\t' + data_rows.date_of_order)
         if len(self.data_rows) > 0:
             self.lbox_data_rows.select_set(0)
 
@@ -108,7 +107,7 @@ class EmployeesWindow:
         pass
 
     # Функция завершения добавления записи
-    def add_record_callback(self, added_data_row: EmployeeDataObject):
+    def add_record_callback(self, added_data_row: OrderDataObject):
         pass
 
     # Функция редактирования записи
@@ -116,7 +115,7 @@ class EmployeesWindow:
         pass
 
     # Функция завершения редактирования записи
-    def edit_record_callback(self, edited_data_row: EmployeeDataObject):
+    def edit_record_callback(self, edited_data_row: OrderDataObject):
         pass
 
     # Функция удаления записи
@@ -126,8 +125,8 @@ class EmployeesWindow:
         if not answer:
             return
         self.selection = self.lbox_data_rows.curselection()[0]
-        id = self.data_rows[self.selection].employee_id
-        EmployeeDataHandler.delete_by_id(id)
+        id = self.data_rows[self.selection].order_id
+        OrderDataHandler.delete_by_id(id)
         self.data_rows.pop(self.selection)
         self.lbox_data_rows.delete(self.selection)
 

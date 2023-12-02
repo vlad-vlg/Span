@@ -29,9 +29,11 @@ class GoodsReportWindow:
         self.btn_close = tk.Button(self.window, text='Закрыть',
                                    font=('Helvetica', 10, 'bold'),
                                    bg='#ccffcc',
-                                   bd=3,
+                                   bd=2,
                                    relief='raised',
-                                   overrelief='groove',
+                                   overrelief='ridge',
+                                   activebackground='#345',
+                                   activeforeground='white',
                                    command=self.close
                                    )
         self.btn_close.place(x=190, y=400, width=90, height=30)

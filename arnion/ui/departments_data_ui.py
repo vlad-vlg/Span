@@ -1,6 +1,5 @@
 import tkinter as tk
 from tkinter import messagebox as mb
-import copy
 from arnion.data.departments_data import DepartmentDataHandler, DepartmentDataObject
 
 
@@ -44,9 +43,11 @@ class DepartmentsWindow:
                                  text='Добавить',
                                  font=('Helvetica', 10, 'bold'),
                                  bg='#ccffff',
-                                 bd=3,
+                                 bd=2,
                                  relief='raised',
-                                 overrelief='groove',
+                                 overrelief='ridge',
+                                 activebackground='#345',
+                                 activeforeground='white',
                                  command=self.add_record
                                  )
         self.btn_add.place(x=20, y=390, width=90, height=30)
@@ -56,9 +57,11 @@ class DepartmentsWindow:
                                   text='Изменить',
                                   font=('Helvetica', 10, 'bold'),
                                   bg='#ccffff',
-                                  bd=3,
+                                  bd=2,
                                   relief='raised',
-                                  overrelief='groove',
+                                  overrelief='ridge',
+                                  activebackground='#345',
+                                  activeforeground='white',
                                   command=self.edit_record
                                   )
         self.btn_edit.place(x=120, y=390, width=90, height=30)
@@ -68,9 +71,11 @@ class DepartmentsWindow:
                                     text='Удалить',
                                     font=('Helvetica', 10, 'bold'),
                                     bg='#ccffff',
-                                    bd=3,
+                                    bd=2,
                                     relief='raised',
-                                    overrelief='groove',
+                                    overrelief='ridge',
+                                    activebackground='#345',
+                                    activeforeground='white',
                                     command=self.delete_record
                                     )
         self.btn_delete.place(x=220, y=390, width=90, height=30)
@@ -80,9 +85,11 @@ class DepartmentsWindow:
                                    text='Закрыть',
                                    font=('Helvetica', 10, 'bold'),
                                    bg='#ccffcc',
-                                   bd=3,
+                                   bd=2,
                                    relief='raised',
-                                   overrelief='groove',
+                                   overrelief='ridge',
+                                   activebackground='#345',
+                                   activeforeground='white',
                                    command=self.close
                                    )
         self.btn_close.place(x=390, y=390, width=90, height=30)
@@ -113,7 +120,7 @@ class DepartmentsWindow:
 
     # Функция удаления записи
     def delete_record(self):
-        answer = mb.askyesno(parent=self.window, title='Подтверждение',
+        answer = mb.askokcancel(parent=self.window, title='Подтверждение',
                              message='Вы действительно хотите удалить запись?')
         if not answer:
             return

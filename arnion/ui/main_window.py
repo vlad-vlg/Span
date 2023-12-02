@@ -8,7 +8,9 @@ from arnion.ui.departments_data_ui import DepartmentsWindow
 from arnion.ui.departments_reports_ui import DepartmentsReportWindow
 from arnion.ui.employees_data_ui import EmployeesWindow
 from arnion.ui.employees_reports_ui import EmployeesReportWindow
-from arnion.ui.goodts_reports_ui import GoodsReportWindow
+from arnion.ui.goods_data_ui import GoodsWindow
+from arnion.ui.goods_reports_ui import GoodsReportWindow
+from arnion.ui.orders_data_ui import OrdersWindow
 from arnion.ui.orders_reports_ui import OrdersReportWindow
 
 
@@ -40,9 +42,11 @@ class MainWindow:
         btn_data1 = tk.Button(self.window, text='Отделы',
                               font=('Helvetica', 10, 'bold'),
                               bg='#ccffcc',
-                              bd=3,
+                              bd=2,
                               relief='raised',
-                              overrelief='groove',
+                              overrelief='ridge',
+                              activebackground='#345',
+                              activeforeground='white',
                               command=self.do_list_departments
                               )
         btn_data1.place(x=25, y=90, width=120, height=50)
@@ -51,9 +55,11 @@ class MainWindow:
         btn_data2 = tk.Button(self.window, text='Сотрудники',
                               font=('Helvetica', 10, 'bold'),
                               bg='#ccffcc',
-                              bd=3,
+                              bd=2,
                               relief='raised',
-                              overrelief='groove',
+                              overrelief='ridge',
+                              activebackground='#345',
+                              activeforeground='white',
                               command=self.do_list_employees
                               )
         btn_data2.place(x=25, y=150, width=120, height=50)
@@ -62,9 +68,12 @@ class MainWindow:
         btn_data3 = tk.Button(self.window, text='Товары',
                               font=('Helvetica', 10, 'bold'),
                               bg='#ccffcc',
-                              bd=3,
+                              bd=2,
                               relief='raised',
-                              overrelief='groove'
+                              overrelief='ridge',
+                              activebackground='#345',
+                              activeforeground='white',
+                              command=self.do_list_goods
                               )
         btn_data3.place(x=25, y=210, width=120, height=50)
 
@@ -72,9 +81,12 @@ class MainWindow:
         btn_data4 = tk.Button(self.window, text='Заказы',
                               font=('Helvetica', 10, 'bold'),
                               bg='#ccffcc',
-                              bd=3,
+                              bd=2,
                               relief='raised',
-                              overrelief='groove'
+                              overrelief='ridge',
+                              activebackground='#345',
+                              activeforeground='white',
+                              command=self.do_list_orders
                               )
         btn_data4.place(x=25, y=270, width=120, height=50)
 
@@ -90,9 +102,11 @@ class MainWindow:
         btn_report1 = tk.Button(self.window, text='Отделы',
                                 font=('Helvetica', 10, 'bold'),
                                 bg='#ccffcc',
-                                bd=3,
+                                bd=2,
                                 relief='raised',
-                                overrelief='groove',
+                                overrelief='ridge',
+                                activebackground='#345',
+                                activeforeground='white',
                                 command=self.do_report_departments
                                 )
         btn_report1.place(x=170, y=90, width=120, height=50)
@@ -101,9 +115,11 @@ class MainWindow:
         btn_report2 = tk.Button(self.window, text='Сотрудники',
                                 font=('Helvetica', 10, 'bold'),
                                 bg='#ccffcc',
-                                bd=3,
+                                bd=2,
                                 relief='raised',
-                                overrelief='groove',
+                                overrelief='ridge',
+                                activebackground='#345',
+                                activeforeground='white',
                                 command=self.do_report_employees
                                 )
         btn_report2.place(x=170, y=150, width=120, height=50)
@@ -112,9 +128,11 @@ class MainWindow:
         btn_report3 = tk.Button(self.window, text='Товары',
                                 font=('Helvetica', 10, 'bold'),
                                 bg='#ccffcc',
-                                bd=3,
+                                bd=2,
                                 relief='raised',
-                                overrelief='groove',
+                                overrelief='ridge',
+                                activebackground='#345',
+                                activeforeground='white',
                                 command=self.do_report_goods
                                 )
         btn_report3.place(x=170, y=210, width=120, height=50)
@@ -123,9 +141,11 @@ class MainWindow:
         btn_report4 = tk.Button(self.window, text='Заказы',
                                 font=('Helvetica', 10, 'bold'),
                                 bg='#ccffcc',
-                                bd=3,
+                                bd=2,
                                 relief='raised',
-                                overrelief='groove',
+                                overrelief='ridge',
+                                activebackground='#345',
+                                activeforeground='white',
                                 command=self.do_report_orders
                                 )
         btn_report4.place(x=170, y=270, width=120, height=50)
@@ -134,9 +154,11 @@ class MainWindow:
         btn_test = tk.Button(self.window, text='Тест',
                              font=('Helvetica', 10, 'bold'),
                              bg='#ffffcc',
-                             bd=3,
+                             bd=2,
                              relief='raised',
-                             overrelief='groove',
+                             overrelief='ridge',
+                             activebackground='#345',
+                             activeforeground='white',
                              command=self.do_test
                              )
         btn_test.place(x=25, y=360, width=120, height=40)
@@ -145,9 +167,11 @@ class MainWindow:
         btn_close = tk.Button(self.window, text='Выход',
                               font=('Helvetica', 10, 'bold'),
                               bg='#ccffcc',
-                              bd=3,
+                              bd=2,
                               relief='raised',
-                              overrelief='groove',
+                              overrelief='ridge',
+                              activebackground='#345',
+                              activeforeground='white',
                               command=self.close
                               )
         btn_close.place(x=170, y=360, width=120, height=40)
@@ -200,6 +224,16 @@ class MainWindow:
     # Открытие списка "Сотрудники"
     def do_list_employees(self):
         rpt = EmployeesWindow()
+        rpt.open()
+
+    # Открытие списка "Товары"
+    def do_list_goods(self):
+        rpt = GoodsWindow()
+        rpt.open()
+
+    # Открытие списка "Заказы"
+    def do_list_orders(self):
+        rpt = OrdersWindow()
         rpt.open()
 
     # Открытие отчета "Отделы"
