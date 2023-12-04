@@ -35,7 +35,7 @@ DROP TABLE IF EXISTS `goods`;
 CREATE TABLE IF NOT EXISTS `goods` (
   `goods_id` INT(11) NOT NULL AUTO_INCREMENT COMMENT 'Код товара',
   `goods_category_id` INT(11) NOT NULL DEFAULT 0 COMMENT 'Код категории товара',
-  `goods` VARCHAR(255) NOT NULL DEFAULT '' COMMENT 'Название товара',
+  `goods_name` VARCHAR(255) NOT NULL DEFAULT '' COMMENT 'Название товара',
   `price` DECIMAL(10,2) DEFAULT 0.00 COMMENT 'Цена товара',
   PRIMARY KEY (`goods_id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;

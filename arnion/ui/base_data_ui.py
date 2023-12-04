@@ -38,3 +38,26 @@ class ListWindow:
     # Функция закрытия окна
     def close(self):
         pass
+
+class RecordWindow:
+
+    # Конструктор
+    def __init__(self):
+        pass
+
+    # Функция открытия окна
+    def open(self):
+        pass
+
+    # Функция сохранения записи и закрытия окна
+    def save(self):
+        pass
+
+
+    # Функция закрытия окна без сохранения записи
+    def close(self):
+        pass
+
+    # Функция сбора информации с полей ввода
+    def collect_from_controls(self):
+        pass
