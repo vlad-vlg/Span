@@ -1,6 +1,7 @@
 import tkinter as tk
 from tkinter import messagebox as mb
 from arnion.data.goods_data import GoodsDataHandler, GoodsDataObject
+from tkinter import simpledialog as sd
 
 
 class GoodsWindow:

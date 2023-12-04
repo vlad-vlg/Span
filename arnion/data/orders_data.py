@@ -2,7 +2,11 @@ from arnion.db.mysql_connection import my_connection_handler
 
 
 class OrderDataObject:
-    def __init__(self, order_id=0, goods_id=0, quantity=1, date_of_order='0000-00-00 00:00:00'):
+    def __init__(self, order_id=0, goods_id=0, quantity=1, date_of_order='0000-00-00 00:00:00') -> object:
+        """
+
+        :rtype: object
+        """
         self.order_id = order_id
         self.goods_id = goods_id
         self.quantity = quantity
@@ -81,5 +85,32 @@ class OrderDataHandler:
                 insert_query = "DELETE FROM orders WHERE order_id=" + str(order_id)
                 with cnn.cursor() as cursor:
                     cursor.execute(insert_query)
+        except:
+            raise
+
+    @staticmethod
+    def update(order: OrderDataObject):
+        try:
+            with my_connection_handler.get_connection() as cnn:
+                insert_query = "UPDATE orders SET "\
+                               "goods_id=" + str(order.goods_id) + ", "\
+                               "quantity=" + str(order.quantity) + " "\
+                               + "WHERE order_id=" + str(order.order_id)
+                with cnn.cursor() as cursor:
+                    cursor.execute(insert_query)
+        except:
+            raise
+
+    @staticmethod
+    def insert(order: OrderDataObject):
+        try:
+            with my_connection_handler.get_connection() as cnn:
+                insert_query = "INSERT INTO orders (goods_id, quantity, date_of_order) VALUES ("\
+                               + str(order.goods_id) + ", "\
+                               + str(order.quantity) + ", "\
+                               + str(order.date_of_order) + ")"
+                with cnn.cursor() as cursor:
+                    cursor.execute(insert_query)
+                    order.order_id = cursor.lastrowid
         except:
             raise

@@ -1,9 +1,10 @@
 import tkinter as tk
+from datetime import date as d
 from arnion.db.mysql_connection import ConnectionHandler
 from arnion.data.departments_data import DepartmentDataHandler, DepartmentDataObject
 from arnion.data.employees_data import EmployeeDataHandler, EmployeeDataObject
 from arnion.data.goods_data import GoodsDataHandler, GoodsDataObject
-from arnion.data.orders_data import OrderDataHandler
+from arnion.data.orders_data import OrderDataHandler, OrderDataObject
 from arnion.ui.departments_data_ui import DepartmentsWindow
 from arnion.ui.departments_reports_ui import DepartmentsReportWindow
 from arnion.ui.employees_data_ui import EmployeesWindow
@@ -181,39 +182,39 @@ class MainWindow:
         ch = ConnectionHandler()
         ch.do_test()
         print('-' * 30)
-        departments = DepartmentDataHandler.select_list()
-        for department in departments:
-            print(department.department_name)
-        print('-' * 30)
-        employees = EmployeeDataHandler.select_list()
-        for employee in employees:
-            print(employee.get_full_name())
-        print('-' * 30)
-        goods = GoodsDataHandler.select_list()
-        for good in goods:
-            print(good.get_goods_price())
-        print('-' * 30)
+#        departments = DepartmentDataHandler.select_list()
+#        for department in departments:
+#            print(department.department_name)
+#        print('-' * 30)
+#        employees = EmployeeDataHandler.select_list()
+#        for employee in employees:
+#            print(employee.get_full_name())
+#        print('-' * 30)
+#        goods = GoodsDataHandler.select_list()
+#        for good in goods:
+#            print(good.get_goods_price())
+#        print('-' * 30)
         orders = OrderDataHandler.select_list()
         print("Код товара", "Количество", "Дата заказа", sep='\t' * 2)
         for order in orders:
             print(order.goods_id, order.quantity, order.date_of_order, sep='\t' * 4)
         print('-' * 30)
-        OrderDataHandler.delete_by_id(1)
-        print('Готово!')
-        print('-' * 30)
-        goods_x = GoodsDataHandler.select_by_id(3)
-        print(goods_x.goods_name)
-        goods_x.goods_name = "Обновление программы SPAN"
-        print(goods_x.goods_name)
-        GoodsDataHandler.update(goods_x)
-        print('Готово!')
-        print('-' * 30)
-        goods_x = GoodsDataObject(goods_category_id=2,
-                                  goods_name="Программа SPAN",
-                                  price=3000.00)
-        print(goods_x.goods_id)
-        GoodsDataHandler.insert(goods_x)
-        print(goods_x.goods_id)
+#       OrderDataHandler.delete_by_id(1)
+#        print('Готово!')
+#        print('-' * 30)
+#        order = OrderDataHandler.select_by_id(2)
+#        print(order.quantity)
+#        order.quantity = 3
+#        print(order.quantity)
+#        OrderDataHandler.update(order)
+#        print('Готово!')
+#        print('-' * 30)
+        order = OrderDataObject(goods_id=3,
+                                quantity=5,
+                                date_of_order='0')
+        print(order.order_id)
+        OrderDataHandler.insert(order)
+        print(order.order_id)
         print('Готово!')
 
     # Открытие списка "Отделы"

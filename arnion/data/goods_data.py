@@ -47,17 +47,17 @@ class GoodsDataHandler:
         return GoodsDataObject(row[0], row[1], row[2], row[3])
 
     @staticmethod
-    def delete_by_id(goods_id: int):
+    def delete_by_id(goods_id):
         try:
             with my_connection_handler.get_connection() as cnn:
-                insert_query = "DELETE FROM goods WHERE goods_id=" + str(goods_id)
+                delete_query = "DELETE FROM goods WHERE goods_id=" + str(goods_id)
                 with cnn.cursor() as cursor:
-                    cursor.execute(insert_query)
+                    cursor.execute(delete_query)
         except:
             raise
 
     @staticmethod
-    def update(goods_x: GoodsDataObject):
+    def update(goods_x):
         try:
             with my_connection_handler.get_connection() as cnn:
                 insert_query = "UPDATE goods SET "\
