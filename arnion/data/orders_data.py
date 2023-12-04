@@ -2,11 +2,7 @@ from arnion.db.mysql_connection import my_connection_handler
 
 
 class OrderDataObject:
-    def __init__(self, order_id=0, goods_id=0, quantity=1, date_of_order='0000-00-00 00:00:00') -> object:
-        """
-
-        :rtype: object
-        """
+    def __init__(self, order_id=0, goods_id=0, quantity=1, date_of_order='0000-00-00 00:00:00'):
         self.order_id = order_id
         self.goods_id = goods_id
         self.quantity = quantity
@@ -60,9 +56,9 @@ class OrderDataHandler:
         orders = []
         try:
             with my_connection_handler.get_connection() as cnn:
-                select_query = "SELECT g.goods_category_id, g.goods_name, g.price, o.* " \
-                               "FROM orders o " \
-                               "LEFT JOIN goods g " \
+                select_query = "SELECT o.*, g.goods_category_id, g.goods_name, g.price " \
+                               "FROM goods g " \
+                               "JOIN orders o " \
                                "ON o.goods_id = g.goods_id " \
                                "ORDER BY goods_category_id, goods_name"
                 with cnn.cursor() as cursor:
@@ -107,8 +103,9 @@ class OrderDataHandler:
             with my_connection_handler.get_connection() as cnn:
                 insert_query = "INSERT INTO orders (goods_id, quantity, date_of_order) VALUES ("\
                                + str(order.goods_id) + ", "\
-                               + str(order.quantity) + ", "\
-                               + str(order.date_of_order) + ")"
+                               + str(order.quantity) + ", '"\
+                               + order.date_of_order + "')"
+                print(insert_query)
                 with cnn.cursor() as cursor:
                     cursor.execute(insert_query)
                     order.order_id = cursor.lastrowid

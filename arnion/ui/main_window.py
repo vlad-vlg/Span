@@ -210,8 +210,8 @@ class MainWindow:
 #        print('Готово!')
 #        print('-' * 30)
         order = OrderDataObject(goods_id=3,
-                                quantity=5,
-                                date_of_order='0')
+                                quantity=5)
+                                #date_of_order='2023-12-04 10:36:27')
         print(order.order_id)
         OrderDataHandler.insert(order)
         print(order.order_id)
