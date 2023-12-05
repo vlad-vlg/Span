@@ -8,7 +8,7 @@ class OrdersReportWindow:
 
     def __init__(self):
         self.window = tk.Toplevel()
-        self.window.geometry('500x450')
+        self.window.geometry('650x450')
         self.window.title('Отчет: Заказы')
         self.window.resizable(False, False)
 
@@ -18,12 +18,12 @@ class OrdersReportWindow:
                              fg='#0000cc',
                              justify='center'
                              )
-        lbl_title.place(x=25, y=15, width=450, height=50)
+        lbl_title.place(x=25, y=15, width=600, height=50)
 
         # Добавление окна вывода текста
         self.txt_output = st(self.window, font=('Courier New', 10, 'bold'))
         self.txt_output.insert(tk.END, self.get_report_text())
-        self.txt_output.place(x=15, y=75, width=470, height=310)
+        self.txt_output.place(x=15, y=75, width=620, height=310)
 
         # Добавление кнопки закрытия окна
         self.btn_close = tk.Button(self.window, text='Закрыть',
@@ -36,13 +36,13 @@ class OrdersReportWindow:
                                    activeforeground='white',
                                    command=self.close
                                    )
-        self.btn_close.place(x=190, y=400, width=90, height=30)
+        self.btn_close.place(x=290, y=400, width=90, height=30)
 
     def get_report_text(self):
-        report_text = ' ' * 15 + 'Заказы по категориям' + os.linesep * 2
-        report_text += 'Код' + '\t' + 'Наименование' + '\t' * 4 + 'Количество' + '\t' + 'Сумма' + os.linesep
-        report_text += 'категории' + '\t' + 'товара' + os.linesep
-        report_text += '-' * 55 + os.linesep
+        report_text = ' ' * 30 + 'Заказы по категориям' + os.linesep * 2
+        report_text += 'Код' + '\t' + '  Номер' + '\t   ' + 'Наименование' + '\t' * 5 + 'Количество' + '\t' + 'Сумма' + os.linesep
+        report_text += 'категории' + '\t' + 'заказа' + '\t  ' + 'товара' + os.linesep
+        report_text += '-' * 74 + os.linesep
         data_rows = OrderDataHandler.select_list_rpt()
         current_goods_category_id = '#-#-#'
         for data_row in data_rows:
@@ -51,7 +51,7 @@ class OrdersReportWindow:
                 report_text += str(data_row.goods_category_id) + os.linesep
                 current_goods_category_id = data_row.goods_category_id
             # Добавляется запись
-            report_text += '\t' + str(data_row.goods_name) + '\t' * 4 + str(data_row.quantity) + '\t' + str(data_row.quantity * data_row.price) + os.linesep
+            report_text += '\t  ' + data_row.order_number + '\t ' + data_row.goods_name + '\t' * 5 + str(data_row.quantity) + '\t' + str(data_row.quantity * data_row.price) + os.linesep
         return report_text
 
     def open(self):

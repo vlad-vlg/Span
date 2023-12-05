@@ -133,7 +133,7 @@ class DepartmentsWindow:
     # Функция удаления записи
     def delete_record(self):
         answer = mb.askokcancel(parent=self.window, title='Подтверждение',
-                             message='Вы действительно хотите удалить запись?')
+                                message='Вы действительно хотите удалить запись?')
         if not answer:
             return
         self.selection = self.lbox_data_rows.curselection()[0]
@@ -200,30 +200,30 @@ class DepartmentWindow:
 
         # Добавление кнопки "Сохранить"
         self.btn_ok = tk.Button(self.window,
-                                 text='Сохранить',
-                                 font=('Helvetica', 10, 'bold'),
-                                 bg='#ccffcc',
-                                 bd=2,
-                                 relief='raised',
-                                 overrelief='ridge',
-                                 activebackground='#345',
-                                 activeforeground='white',
-                                 command=self.save
-                                 )
+                                text='Сохранить',
+                                font=('Helvetica', 10, 'bold'),
+                                bg='#ccffcc',
+                                bd=2,
+                                relief='raised',
+                                overrelief='ridge',
+                                activebackground='#345',
+                                activeforeground='white',
+                                command=self.save
+                                )
         self.btn_ok.place(x=140, y=150, width=90, height=30)
 
         # Добавление кнопки "Отмена"
         self.btn_cancel = tk.Button(self.window,
-                                  text='Отмена',
-                                  font=('Helvetica', 10, 'bold'),
-                                  bg='#ffffee',
-                                  bd=2,
-                                  relief='raised',
-                                  overrelief='ridge',
-                                  activebackground='#345',
-                                  activeforeground='white',
-                                  command=self.close
-                                  )
+                                    text='Отмена',
+                                    font=('Helvetica', 10, 'bold'),
+                                    bg='#ffffee',
+                                    bd=2,
+                                    relief='raised',
+                                    overrelief='ridge',
+                                    activebackground='#345',
+                                    activeforeground='white',
+                                    command=self.close
+                                    )
         self.btn_cancel.place(x=250, y=150, width=90, height=30)
 
     # Функция открытия окна
