@@ -97,7 +97,6 @@ class OrdersWindow:
 
     # Функция заполнения списка
     def init_data_rows(self):
-#        self.lbox_data_rows.insert(0, 'Номер заказа' + '\t' + 'Дата заказа')
         self.data_rows = OrderDataHandler.select_list()
         for data_rows in self.data_rows:
             self.lbox_data_rows.insert('end', str(data_rows.order_number) + ' - ' + str(data_rows.date_of_order))
@@ -160,6 +159,7 @@ class OrdersWindow:
     def close(self):
         self.window.destroy()
 
+
 class OrderWindow:
     # Конструктор
     def __init__(self, add_new: bool, data_row: OrderDataObject, parent: OrdersWindow):
@@ -200,30 +200,30 @@ class OrderWindow:
 
         # Добавление кнопки "Сохранить"
         self.btn_ok = tk.Button(self.window,
-                                 text='Сохранить',
-                                 font=('Helvetica', 10, 'bold'),
-                                 bg='#ccffcc',
-                                 bd=2,
-                                 relief='raised',
-                                 overrelief='ridge',
-                                 activebackground='#345',
-                                 activeforeground='white',
-                                 command=self.save
-                                 )
+                                text='Сохранить',
+                                font=('Helvetica', 10, 'bold'),
+                                bg='#ccffcc',
+                                bd=2,
+                                relief='raised',
+                                overrelief='ridge',
+                                activebackground='#345',
+                                activeforeground='white',
+                                command=self.save
+                                )
         self.btn_ok.place(x=140, y=150, width=90, height=30)
 
         # Добавление кнопки "Отмена"
         self.btn_cancel = tk.Button(self.window,
-                                  text='Отмена',
-                                  font=('Helvetica', 10, 'bold'),
-                                  bg='#ffffee',
-                                  bd=2,
-                                  relief='raised',
-                                  overrelief='ridge',
-                                  activebackground='#345',
-                                  activeforeground='white',
-                                  command=self.close
-                                  )
+                                    text='Отмена',
+                                    font=('Helvetica', 10, 'bold'),
+                                    bg='#ffffee',
+                                    bd=2,
+                                    relief='raised',
+                                    overrelief='ridge',
+                                    activebackground='#345',
+                                    activeforeground='white',
+                                    command=self.close
+                                    )
         self.btn_cancel.place(x=250, y=150, width=90, height=30)
 
     # Функция открытия окна
