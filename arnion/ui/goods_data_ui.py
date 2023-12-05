@@ -1,7 +1,7 @@
+import copy
 import tkinter as tk
 from tkinter import messagebox as mb
-from arnion.data.goods_data import GoodsDataHandler, GoodsDataObject
-from tkinter import simpledialog as sd
+from arnion.data.goods_data import GoodsxDataHandler, GoodsxDataObject
 
 
 class GoodsWindow:
@@ -97,7 +97,7 @@ class GoodsWindow:
 
     # Функция заполнения списка
     def init_data_rows(self):
-        self.data_rows = GoodsDataHandler.select_list()
+        self.data_rows = GoodsxDataHandler.select_list()
         for data_rows in self.data_rows:
             self.lbox_data_rows.insert('end', data_rows.goods_name)
         if len(self.data_rows) > 0:
@@ -105,19 +105,30 @@ class GoodsWindow:
 
     # Функция добавления записи
     def add_record(self):
-        pass
+        self.data_row = GoodsxDataObject()
+        self.record_window = GoodsxWindow(True, self.data_row, self)
+        self.record_window.open()
 
     # Функция завершения добавления записи
-    def add_record_callback(self, added_data_row: GoodsDataObject):
-        pass
+    def add_record_callback(self, added_data_row: GoodsxDataObject):
+        GoodsxDataHandler.insert(added_data_row)
+        self.data_rows.append(added_data_row)
+        self.lbox_data_rows.insert('end', added_data_row.goods_name)
+        self.lbox_data_rows.selection_clear(0, 'end')
+        self.lbox_data_rows.selection_set('end')
 
     # Функция редактирования записи
     def edit_record(self):
-        pass
+        self.selection = self.lbox_data_rows.curselection()[0]
+        self.data_row = copy.deepcopy(self.data_rows[self.selection])
+        self.record_window = GoodsxWindow(False, self.data_row, self)
+        self.record_window.open()
 
     # Функция завершения редактирования записи
-    def edit_record_callback(self, edited_data_row: GoodsDataObject):
-        pass
+    def edit_record_callback(self, edited_data_row: GoodsxDataObject):
+        GoodsxDataHandler.update(edited_data_row)
+        self.data_rows[self.selection] = edited_data_row
+        self.refresh_listbox(self.selection, edited_data_row.goods_name)
 
     # Функция удаления записи
     def delete_record(self):
@@ -127,13 +138,15 @@ class GoodsWindow:
             return
         self.selection = self.lbox_data_rows.curselection()[0]
         id = self.data_rows[self.selection].goods_id
-        GoodsDataHandler.delete_by_id(id)
+        GoodsxDataHandler.delete_by_id(id)
         self.data_rows.pop(self.selection)
         self.lbox_data_rows.delete(self.selection)
 
     # Функция обновления списка
     def refresh_listbox(self, selection: int, value: str):
-        pass
+        self.lbox_data_rows.delete(selection, selection)
+        self.lbox_data_rows.insert(selection, value)
+        self.lbox_data_rows.select_set(selection)
 
     # Функция открытия окна
     def open(self):
@@ -145,3 +158,94 @@ class GoodsWindow:
     # Функция закрытия окна
     def close(self):
         self.window.destroy()
+
+
+class GoodsxWindow:
+    # Конструктор
+    def __init__(self, add_new: bool, data_row: GoodsxDataObject, parent: GoodsWindow):
+
+        if add_new:
+            title_text = 'Новый товар'
+        else:
+            title_text = 'Редактирование товара'
+
+        self.add_new = add_new
+        self.data_row = data_row
+        self.parent = parent
+
+        self.window = tk.Toplevel()
+        self.window.geometry('500x200')
+        self.window.title(title_text)
+        self.window.resizable(False, False)
+
+        # Добавление метки заголовка
+        lbl_title = tk.Label(self.window,
+                             text=title_text,
+                             font=('Helvetica', 16, 'bold'),
+                             fg='#0000cc',
+                             justify='center'
+                             )
+        lbl_title.place(x=25, y=15, width=450, height=50)
+
+        # Добавление полей ввода
+        lbl_name = tk.Label(self.window,
+                            text='Товар:',
+                            font=('Helvetica', 10, 'bold')
+                            )
+        lbl_name.place(x=20, y=85)
+
+        self.ent_name = tk.Entry(self.window, font=('Helvetica', 10, 'bold'))
+        self.ent_name.place(x=115, y=85, width=370, height=25)
+        self.ent_name.insert(tk.END, data_row.goods_name)
+
+        # Добавление кнопки "Сохранить"
+        self.btn_ok = tk.Button(self.window,
+                                text='Сохранить',
+                                font=('Helvetica', 10, 'bold'),
+                                bg='#ccffcc',
+                                bd=2,
+                                relief='raised',
+                                overrelief='ridge',
+                                activebackground='#345',
+                                activeforeground='white',
+                                command=self.save
+                                )
+        self.btn_ok.place(x=140, y=150, width=90, height=30)
+
+        # Добавление кнопки "Отмена"
+        self.btn_cancel = tk.Button(self.window,
+                                    text='Отмена',
+                                    font=('Helvetica', 10, 'bold'),
+                                    bg='#ffffee',
+                                    bd=2,
+                                    relief='raised',
+                                    overrelief='ridge',
+                                    activebackground='#345',
+                                    activeforeground='white',
+                                    command=self.close
+                                    )
+        self.btn_cancel.place(x=250, y=150, width=90, height=30)
+
+    # Функция открытия окна
+    def open(self):
+        # Перевод фокуса на созданное окно
+        self.window.focus_force()
+        # Перевод всех команд на созданное окно
+        self.window.grab_set()
+
+    # Функция сохранения записи и закрытия окна
+    def save(self):
+        self.collect_from_controls()
+        if self.add_new:
+            self.parent.add_record_callback(self.data_row)
+        else:
+            self.parent.edit_record_callback(self.data_row)
+        self.close()
+
+    # Функция закрытия окна
+    def close(self):
+        self.window.destroy()
+
+    # Функция сбора информации с полей ввода
+    def collect_from_controls(self):
+        self.data_row.goods_name = str(self.ent_name.get())

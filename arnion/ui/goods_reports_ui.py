@@ -1,7 +1,7 @@
 import tkinter as tk
 from tkinter.scrolledtext import ScrolledText as st
 import os
-from arnion.data.goods_data import GoodsDataHandler
+from arnion.data.goods_data import GoodsxDataHandler
 
 
 class GoodsReportWindow:
@@ -41,7 +41,7 @@ class GoodsReportWindow:
     def get_report_text(self):
         report_text = ' ' * 24 + 'Товары' + os.linesep
         report_text += '-' * 55 + os.linesep
-        data_rows = GoodsDataHandler.select_list()
+        data_rows = GoodsxDataHandler.select_list()
         for data_row in data_rows:
             report_text += data_row.goods_name + os.linesep
         return report_text

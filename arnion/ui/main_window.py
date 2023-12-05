@@ -3,7 +3,7 @@ from datetime import date as d
 from arnion.db.mysql_connection import ConnectionHandler
 from arnion.data.departments_data import DepartmentDataHandler, DepartmentDataObject
 from arnion.data.employees_data import EmployeeDataHandler, EmployeeDataObject
-from arnion.data.goods_data import GoodsDataHandler, GoodsDataObject
+from arnion.data.goods_data import GoodsxDataHandler, GoodsxDataObject
 from arnion.data.orders_data import OrderDataHandler, OrderDataObject
 from arnion.ui.departments_data_ui import DepartmentsWindow
 from arnion.ui.departments_reports_ui import DepartmentsReportWindow
@@ -210,8 +210,8 @@ class MainWindow:
 #        print('Готово!')
 #        print('-' * 30)
         order = OrderDataObject(goods_id=3,
-                                quantity=5)
-                                #date_of_order='2023-12-04 10:36:27')
+                                quantity=5,
+                                date_of_order='2023-12-04 10:36:27')
         print(order.order_id)
         OrderDataHandler.insert(order)
         print(order.order_id)

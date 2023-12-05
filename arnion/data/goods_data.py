@@ -1,7 +1,7 @@
 from arnion.db.mysql_connection import my_connection_handler
 
 
-class GoodsDataObject:
+class GoodsxDataObject:
     def __init__(self, goods_id=0, goods_category_id=0, goods_name='', price=0.00):
         self.goods_id = goods_id
         self.goods_category_id = goods_category_id
@@ -13,7 +13,7 @@ class GoodsDataObject:
         return goods_price
 
 
-class GoodsDataHandler:
+class GoodsxDataHandler:
     @staticmethod
     def select_list():
         goods = []
@@ -24,7 +24,7 @@ class GoodsDataHandler:
                     cursor.execute(select_query)
                     result = cursor.fetchall()
                     for row in result:
-                        goods.append(GoodsDataHandler.get_goods(row))
+                        goods.append(GoodsxDataHandler.get_goods(row))
             return goods
         except:
             raise
@@ -37,14 +37,14 @@ class GoodsDataHandler:
                 with cnn.cursor() as cursor:
                     cursor.execute(select_query)
                     row = cursor.fetchone()
-                    goods = GoodsDataHandler.get_goods(row)
+                    goods = GoodsxDataHandler.get_goods(row)
                     return goods
         except:
             raise
 
     @staticmethod
     def get_goods(row):
-        return GoodsDataObject(row[0], row[1], row[2], row[3])
+        return GoodsxDataObject(row[0], row[1], row[2], row[3])
 
     @staticmethod
     def delete_by_id(goods_id):
@@ -71,7 +71,7 @@ class GoodsDataHandler:
             raise
 
     @staticmethod
-    def insert(goods_x: GoodsDataObject):
+    def insert(goods_x: GoodsxDataObject):
         try:
             with my_connection_handler.get_connection() as cnn:
                 insert_query = "INSERT INTO goods (goods_category_id, goods_name, price) VALUES ("\

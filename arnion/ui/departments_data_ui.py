@@ -165,7 +165,7 @@ class DepartmentWindow:
     def __init__(self, add_new: bool, data_row: DepartmentDataObject, parent: DepartmentsWindow):
 
         if add_new:
-            title_text = 'Новый Отдел'
+            title_text = 'Новый отдел'
         else:
             title_text = 'Редактирование отдела'
 

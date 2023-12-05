@@ -39,6 +39,7 @@ class ListWindow:
     def close(self):
         pass
 
+
 class RecordWindow:
 
     # Конструктор
@@ -52,7 +53,6 @@ class RecordWindow:
     # Функция сохранения записи и закрытия окна
     def save(self):
         pass
-
 
     # Функция закрытия окна без сохранения записи
     def close(self):
