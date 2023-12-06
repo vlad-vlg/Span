@@ -151,18 +151,18 @@ class MainWindow:
                                 )
         btn_report4.place(x=170, y=270, width=120, height=50)
 
-        # Добавление кнопки "Тест"
-        btn_test = tk.Button(self.window, text='Тест',
-                             font=('Helvetica', 10, 'bold'),
-                             bg='#ffffcc',
-                             bd=2,
-                             relief='raised',
-                             overrelief='ridge',
-                             activebackground='#345',
-                             activeforeground='white',
-                             command=self.do_test
-                             )
-        btn_test.place(x=25, y=360, width=120, height=40)
+        # # Добавление кнопки "Тест"
+        # btn_test = tk.Button(self.window, text='Тест',
+        #                      font=('Helvetica', 10, 'bold'),
+        #                      bg='#ffffcc',
+        #                      bd=2,
+        #                      relief='raised',
+        #                      overrelief='ridge',
+        #                      activebackground='#345',
+        #                      activeforeground='white',
+        #                      command=self.do_test
+        #                      )
+        # btn_test.place(x=25, y=360, width=120, height=40)
 
         # Добавление кнопки закрытия программы
         btn_close = tk.Button(self.window, text='Выход',
