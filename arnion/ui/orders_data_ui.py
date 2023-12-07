@@ -1,14 +1,15 @@
 import copy
 import tkinter as tk
+from tkinter import ttk
 from tkinter import messagebox as mb
-from arnion.data.orders_data import OrderDataHandler, OrderDataObject
+from arnion.data.orders_data import OrderDataHandler, OrderRptDataObject, OrderDataObject
 
 
 class OrdersWindow:
     # Конструктор
     def __init__(self):
         self.window = tk.Toplevel()
-        self.window.geometry('500x435')
+        self.window.geometry('650x435')
         self.window.title('Заказы')
         self.window.resizable(False, False)
 
@@ -19,11 +20,11 @@ class OrdersWindow:
                              fg='#0000cc',
                              justify='center'
                              )
-        lbl_title.place(x=25, y=15, width=450, height=50)
+        lbl_title.place(x=25, y=15, width=600, height=50)
 
         # Контейнер для списка и полосы прокрутки
         self.frame = tk.Frame(self.window)
-        self.frame.place(x=15, y=75, width=470, height=300)
+        self.frame.place(x=15, y=75, width=620, height=300)
         # Добавление списка записей
         self.lbox_data_rows = tk.Listbox(self.frame,
                                          bd=2,
@@ -33,9 +34,9 @@ class OrdersWindow:
                                          )
         self.scrollbar = tk.Scrollbar(self.frame, orient='vertical')
         self.scrollbar.config(command=self.lbox_data_rows.yview)
-        self.scrollbar.place(x=450, y=0, width=20, height=300)
+        self.scrollbar.place(x=600, y=0, width=20, height=300)
         self.lbox_data_rows.config(yscrollcommand=self.scrollbar.set)
-        self.lbox_data_rows.place(x=0, y=0, width=450, height=300)
+        self.lbox_data_rows.place(x=0, y=0, width=600, height=300)
 
         self.init_data_rows()
 
@@ -93,19 +94,21 @@ class OrdersWindow:
                                    activeforeground='white',
                                    command=self.close
                                    )
-        self.btn_close.place(x=390, y=390, width=90, height=30)
+        self.btn_close.place(x=540, y=390, width=90, height=30)
 
     # Функция заполнения списка
     def init_data_rows(self):
-        self.data_rows = OrderDataHandler.select_list()
+        self.data_rows = OrderDataHandler.select_list_rpt()
         for data_rows in self.data_rows:
-            self.lbox_data_rows.insert('end', str(data_rows.order_number) + ' - ' + str(data_rows.date_of_order))
+            self.lbox_data_rows.insert('end', str(data_rows.order_number) + ' | ' +
+                                       str(data_rows.goods_name) + ' | ' + str(data_rows.quantity) + ' | ' +
+                                       str(data_rows.date_of_order))
         if len(self.data_rows) > 0:
             self.lbox_data_rows.select_set(0)
 
     # Функция добавления записи
     def add_record(self):
-        self.data_row = OrderDataObject()
+        self.data_row = OrderRptDataObject()
         self.record_window = OrderWindow(True, self.data_row, self)
         self.record_window.open()
 
@@ -113,7 +116,7 @@ class OrdersWindow:
     def add_record_callback(self, added_data_row: OrderDataObject):
         OrderDataHandler.insert(added_data_row)
         self.data_rows.append(added_data_row)
-        self.lbox_data_rows.insert('end', added_data_row.order_number)
+        self.lbox_data_rows.insert('end', added_data_row.goods_id)
         self.lbox_data_rows.selection_clear(0, 'end')
         self.lbox_data_rows.selection_set('end')
 
@@ -162,7 +165,7 @@ class OrdersWindow:
 
 class OrderWindow:
     # Конструктор
-    def __init__(self, add_new: bool, data_row: OrderDataObject, parent: OrdersWindow):
+    def __init__(self, add_new: bool, data_row: OrderRptDataObject, parent: OrdersWindow):
 
         if add_new:
             title_text = 'Новый заказ'
@@ -174,7 +177,7 @@ class OrderWindow:
         self.parent = parent
 
         self.window = tk.Toplevel()
-        self.window.geometry('500x200')
+        self.window.geometry('560x290')
         self.window.title(title_text)
         self.window.resizable(False, False)
 
@@ -185,18 +188,48 @@ class OrderWindow:
                              fg='#0000cc',
                              justify='center'
                              )
-        lbl_title.place(x=25, y=15, width=450, height=50)
+        lbl_title.place(x=55, y=15, width=450, height=50)
 
         # Добавление полей ввода
-        lbl_name = tk.Label(self.window,
-                            text='Заказ:',
-                            font=('Helvetica', 10, 'bold')
-                            )
-        lbl_name.place(x=20, y=85)
+        lbl_order_number = tk.Label(self.window,
+                                    text='Номер заказа:',
+                                    font=('Helvetica', 10, 'bold')
+                                    )
+        lbl_order_number.place(x=15, y=85)
 
-        self.ent_name = tk.Entry(self.window, font=('Helvetica', 10, 'bold'))
-        self.ent_name.place(x=115, y=85, width=370, height=25)
-        self.ent_name.insert(tk.END, data_row.order_number)
+        self.ent_order_number = tk.Entry(self.window, font=('Helvetica', 10, 'bold'))
+        self.ent_order_number.place(x=175, y=85, width=370, height=25)
+        self.ent_order_number.insert(tk.END, data_row.order_number)
+
+        lbl_goods_name = tk.Label(self.window,
+                                  text='Наименование товара:',
+                                  font=('Helvetica', 10, 'bold')
+                                  )
+        lbl_goods_name.place(x=15, y=120)
+        self.cbo_goods_name = ttk.Combobox(self.window, font=('Helvetica', 10, 'bold'))
+        self.init_combobox()
+        # Запрет на ввод произвольных значений
+        self.cbo_goods_name['state'] = 'readonly'
+        self.set_id_to_combobox(data_row.goods_name)
+        self.cbo_goods_name.place(x=175, y=120, width=370, height=25)
+
+        lbl_quantity = tk.Label(self.window,
+                                text='Количество товара:',
+                                font=('Helvetica', 10, 'bold')
+                                )
+        lbl_quantity.place(x=15, y=155)
+        self.ent_quantity = tk.Entry(self.window, font=('Helvetica', 10, 'bold'))
+        self.ent_quantity.place(x=175, y=155, width=370, height=25)
+        self.ent_quantity.insert(tk.END, data_row.quantity)
+
+        lbl_date_of_order = tk.Label(self.window,
+                                     text='Дата заказа:',
+                                     font=('Helvetica', 10, 'bold')
+                                     )
+        lbl_date_of_order.place(x=15, y=190)
+        self.ent_date_of_order = tk.Entry(self.window, font=('Helvetica', 10, 'bold'))
+        self.ent_date_of_order.place(x=175, y=190, width=370, height=25)
+        self.ent_date_of_order.insert(tk.END, data_row.date_of_order)
 
         # Добавление кнопки "Сохранить"
         self.btn_ok = tk.Button(self.window,
@@ -210,7 +243,7 @@ class OrderWindow:
                                 activeforeground='white',
                                 command=self.save
                                 )
-        self.btn_ok.place(x=140, y=150, width=90, height=30)
+        self.btn_ok.place(x=170, y=240, width=90, height=30)
 
         # Добавление кнопки "Отмена"
         self.btn_cancel = tk.Button(self.window,
@@ -224,7 +257,33 @@ class OrderWindow:
                                     activeforeground='white',
                                     command=self.close
                                     )
-        self.btn_cancel.place(x=250, y=150, width=90, height=30)
+        self.btn_cancel.place(x=280, y=240, width=90, height=30)
+
+    # Функция заполнения выпадающего списка
+    def init_combobox(self):
+        self.cbox_ids = []
+        self.cbox_values = []
+        data_rows = OrderDataHandler.select_list_rpt()
+        for data_row in data_rows:
+            self.cbox_ids.append(data_row.goods_id)
+            self.cbox_values.append(data_row.goods_name)
+        self.cbo_goods_name['values'] = self.cbox_values
+
+    # Функция применения id к выпадающему списку
+    def set_id_to_combobox(self, id):
+        try:
+            id_index = self.cbox_ids.index(int(id))
+            self.cbo_goods_name.set(self.cbox_values[id_index])
+        except ValueError as e:
+            self.cbo_goods_name.set('')
+
+    # Функция считывания id из выпадающего списка
+    def get_id_from_combobox(self, value: str) -> int:
+        try:
+            id_index = self.cbox_values.index(value)
+            return self.cbox_ids[id_index]
+        except ValueError as e:
+            return 0
 
     # Функция открытия окна
     def open(self):
@@ -248,4 +307,7 @@ class OrderWindow:
 
     # Функция сбора информации с полей ввода
     def collect_from_controls(self):
-        self.data_row.order_number = str(self.ent_name.get())
+        self.data_row.order_number = str(self.ent_order_number.get())
+        self.data_row.order_number = str(self.get_id_from_combobox(self.cbo_goods_name.get()))
+        self.data_row.order_number = str(self.ent_quantity.get())
+        self.data_row.order_number = str(self.ent_date_of_order.get())

@@ -92,7 +92,8 @@ class OrderDataHandler:
                 insert_query = "UPDATE orders SET "\
                                "order_number='" + order.order_number + "', "\
                                "goods_id=" + str(order.goods_id) + ", "\
-                               "quantity=" + str(order.quantity) + " "\
+                               "quantity=" + str(order.quantity) + ", "\
+                               "date_of_order='" + str(order.date_of_order) + "' "\
                                + "WHERE order_id=" + str(order.order_id)
                 with cnn.cursor() as cursor:
                     cursor.execute(insert_query)
