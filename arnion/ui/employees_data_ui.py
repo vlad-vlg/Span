@@ -230,7 +230,6 @@ class EmployeeWindow:
         self.cbo_department['state'] = 'readonly'
         self.set_id_to_combobox(data_row.department_id)
         self.cbo_department.place(x=115, y=190, width=370, height=25)
-        self.ent_last_name.insert(tk.END, data_row.last_name)
 
         # Добавление кнопки "Сохранить"
         self.btn_ok = tk.Button(self.window,

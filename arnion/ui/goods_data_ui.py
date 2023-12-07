@@ -1,6 +1,9 @@
 import copy
 import tkinter as tk
+from tkinter import ttk
 from tkinter import messagebox as mb
+
+from arnion.data.goods_categories_data import Goods_categoryDataHandler
 from arnion.data.goods_data import GoodsxDataHandler, GoodsxDataObject
 
 
@@ -174,7 +177,7 @@ class GoodsxWindow:
         self.parent = parent
 
         self.window = tk.Toplevel()
-        self.window.geometry('500x200')
+        self.window.geometry('560x250')
         self.window.title(title_text)
         self.window.resizable(False, False)
 
@@ -185,18 +188,38 @@ class GoodsxWindow:
                              fg='#0000cc',
                              justify='center'
                              )
-        lbl_title.place(x=25, y=15, width=450, height=50)
+        lbl_title.place(x=60, y=15, width=450, height=50)
 
         # Добавление полей ввода
         lbl_name = tk.Label(self.window,
-                            text='Товар:',
+                            text='Наименование товара:',
                             font=('Helvetica', 10, 'bold')
                             )
-        lbl_name.place(x=20, y=85)
-
+        lbl_name.place(x=15, y=85)
         self.ent_name = tk.Entry(self.window, font=('Helvetica', 10, 'bold'))
-        self.ent_name.place(x=115, y=85, width=370, height=25)
+        self.ent_name.place(x=175, y=85, width=370, height=25)
         self.ent_name.insert(tk.END, data_row.goods_name)
+
+        lbl_price = tk.Label(self.window,
+                             text='Цена:',
+                             font=('Helvetica', 10, 'bold')
+                             )
+        lbl_price.place(x=15, y=155)
+        self.ent_price = tk.Entry(self.window, font=('Helvetica', 10, 'bold'))
+        self.ent_price.place(x=175, y=155, width=370, height=25)
+        self.ent_price.insert(tk.END, data_row.price)
+
+        lbl_goods_category = tk.Label(self.window,
+                                      text='Категория товара:',
+                                      font=('Helvetica', 10, 'bold')
+                                      )
+        lbl_goods_category.place(x=15, y=120)
+        self.cbo_goods_category = ttk.Combobox(self.window, font=('Helvetica', 10, 'bold'))
+        self.init_combobox()
+        # Запрет на ввод произвольных значений
+        self.cbo_goods_category['state'] = 'readonly'
+        self.set_id_to_combobox(data_row.goods_category_id)
+        self.cbo_goods_category.place(x=175, y=120, width=370, height=25)
 
         # Добавление кнопки "Сохранить"
         self.btn_ok = tk.Button(self.window,
@@ -210,7 +233,7 @@ class GoodsxWindow:
                                 activeforeground='white',
                                 command=self.save
                                 )
-        self.btn_ok.place(x=140, y=150, width=90, height=30)
+        self.btn_ok.place(x=170, y=200, width=90, height=30)
 
         # Добавление кнопки "Отмена"
         self.btn_cancel = tk.Button(self.window,
@@ -224,7 +247,33 @@ class GoodsxWindow:
                                     activeforeground='white',
                                     command=self.close
                                     )
-        self.btn_cancel.place(x=250, y=150, width=90, height=30)
+        self.btn_cancel.place(x=280, y=200, width=90, height=30)
+
+    # Функция заполнения выпадающего списка
+    def init_combobox(self):
+        self.cbox_ids = []
+        self.cbox_values = []
+        data_rows = Goods_categoryDataHandler.select_list()
+        for data_row in data_rows:
+            self.cbox_ids.append(data_row.goods_category_id)
+            self.cbox_values.append(data_row.goods_category_name)
+        self.cbo_goods_category['values'] = self.cbox_values
+
+    # Функция применения id к выпадающему списку
+    def set_id_to_combobox(self, id):
+        try:
+            id_index = self.cbox_ids.index(int(id))
+            self.cbo_goods_category.set(self.cbox_values[id_index])
+        except ValueError as e:
+            self.cbo_goods_category.set('')
+
+    # Функция считывания id из выпадающего списка
+    def get_id_from_combobox(self, value: str) -> int:
+        try:
+            id_index = self.cbox_values.index(value)
+            return self.cbox_ids[id_index]
+        except ValueError as e:
+            return 0
 
     # Функция открытия окна
     def open(self):
@@ -249,3 +298,5 @@ class GoodsxWindow:
     # Функция сбора информации с полей ввода
     def collect_from_controls(self):
         self.data_row.goods_name = str(self.ent_name.get())
+        self.data_row.price = str(self.ent_price.get())
+        self.data_row.goods_category_id = str(self.get_id_from_combobox(self.cbo_goods_category.get()))

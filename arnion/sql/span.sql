@@ -50,6 +50,13 @@ CREATE TABLE IF NOT EXISTS `orders` (
   PRIMARY KEY (`order_id`)
   ) ENGINE=MYISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
+DROP TABLE IF EXISTS `goods_categories`;
+CREATE TABLE IF NOT EXISTS `goods_categories` (
+    `goods_category_id` INT(11) NOT NULL AUTO_INCREMENT,
+    `goods_category_name` VARCHAR(250) NOT NULL DEFAULT '',
+    PRIMARY KEY (`goods_category_id`)
+    ) ENGINE=MYISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+
 INSERT INTO goods (goods_category_id, goods_name, price)
 VALUES (1, 'Электронная книга', 1000),
         (2, 'Программа "Калькулятор"', 2000),
@@ -59,3 +66,8 @@ INSERT INTO orders (order_number, goods_id, quantity, date_of_order)
 VALUES ('№01-2023', 1, 2, NOW()),
         ("№02-2023", 2, 1, NOW()),
         ("№03-2023", 3, 5, NOW());
+
+INSERT INTO goods_categories (goods_category_name)
+VALUES ('Гаджеты'),
+        ('Программное обеспечение'),
+        ('Услуги');
