@@ -11,7 +11,7 @@ class EmployeesWindow:
     # Конструктор
     def __init__(self):
         self.window = tk.Toplevel()
-        self.window.geometry('500x435')
+        self.window.geometry('500x435+730+400')
         self.window.title('Сотрудники')
         self.window.resizable(False, False)
 
@@ -178,7 +178,7 @@ class EmployeeWindow:
         self.parent = parent
 
         self.window = tk.Toplevel()
-        self.window.geometry('500x290')
+        self.window.geometry('500x290+730+545')
         self.window.title(title_text)
         self.window.resizable(False, False)
 

@@ -8,7 +8,7 @@ class DepartmentsWindow:
     # Конструктор
     def __init__(self):
         self.window = tk.Toplevel()
-        self.window.geometry('500x435')
+        self.window.geometry('500x435+730+400')
         self.window.title('Отделы')
         self.window.resizable(False, False)
 
@@ -23,13 +23,14 @@ class DepartmentsWindow:
 
         # Контейнер для списка и полосы прокрутки
         self.frame = tk.Frame(self.window)
-        self.frame.place(x=15, y=75, width=470, height=300)
+        self.frame.place(x=15, y=75, width=470, height=300, )
         # Добавление списка записей
         self.lbox_data_rows = tk.Listbox(self.frame,
                                          bd=2,
                                          selectmode='single',
                                          activestyle='none',
-                                         font=('Courier New', 10, 'bold')
+                                         font=('Courier New', 10, 'bold'),
+                                         bg='#dfefef'
                                          )
         self.scrollbar = tk.Scrollbar(self.frame, orient='vertical')
         self.scrollbar.config(command=self.lbox_data_rows.yview)
@@ -174,7 +175,7 @@ class DepartmentWindow:
         self.parent = parent
 
         self.window = tk.Toplevel()
-        self.window.geometry('500x200')
+        self.window.geometry('500x200+730+635')
         self.window.title(title_text)
         self.window.resizable(False, False)
 

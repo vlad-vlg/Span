@@ -11,7 +11,7 @@ class OrdersWindow:
     # Конструктор
     def __init__(self):
         self.window = tk.Toplevel()
-        self.window.geometry('650x435')
+        self.window.geometry('500x435+730+400')
         self.window.title('Заказы')
         self.window.resizable(False, False)
 
@@ -22,23 +22,24 @@ class OrdersWindow:
                              fg='#0000cc',
                              justify='center'
                              )
-        lbl_title.place(x=25, y=15, width=600, height=50)
+        lbl_title.place(x=25, y=15, width=450, height=50)
 
         # Контейнер для списка и полосы прокрутки
         self.frame = tk.Frame(self.window)
-        self.frame.place(x=15, y=75, width=620, height=300)
+        self.frame.place(x=15, y=75, width=470, height=300)
         # Добавление списка записей
         self.lbox_data_rows = tk.Listbox(self.frame,
                                          bd=2,
                                          selectmode='single',
                                          activestyle='none',
-                                         font=('Courier New', 10, 'bold')
+                                         font=('Courier New', 10, 'bold'),
+                                         bg='#dfefef'
                                          )
         self.scrollbar = ttk.Scrollbar(self.frame, orient='vertical')
         self.scrollbar.config(command=self.lbox_data_rows.yview)
-        self.scrollbar.place(x=600, y=0, width=20, height=300)
+        self.scrollbar.place(x=450, y=0, width=20, height=300)
         self.lbox_data_rows.config(yscrollcommand=self.scrollbar.set)
-        self.lbox_data_rows.place(x=0, y=0, width=600, height=300)
+        self.lbox_data_rows.place(x=0, y=0, width=450, height=300)
 
         self.init_data_rows()
 
@@ -96,7 +97,7 @@ class OrdersWindow:
                                    activeforeground='white',
                                    command=self.close
                                    )
-        self.btn_close.place(x=540, y=390, width=90, height=30)
+        self.btn_close.place(x=390, y=390, width=90, height=30)
 
     # Функция заполнения списка
     def init_data_rows(self):
@@ -177,7 +178,7 @@ class OrderWindow:
         self.parent = parent
 
         self.window = tk.Toplevel()
-        self.window.geometry('560x290')
+        self.window.geometry('560x290+730+545')
         self.window.title(title_text)
         self.window.resizable(False, False)
 

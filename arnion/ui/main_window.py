@@ -20,7 +20,7 @@ class MainWindow:
     # Конструктор
     def __init__(self):
         self.window = tk.Tk()
-        self.window.geometry('330x430')
+        self.window.geometry('330x435+400+400')
         self.window.title('SPAN')
         self.window.resizable(False, False)
 

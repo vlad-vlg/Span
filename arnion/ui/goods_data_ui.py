@@ -11,7 +11,7 @@ class GoodsWindow:
     # Конструктор
     def __init__(self):
         self.window = tk.Toplevel()
-        self.window.geometry('500x435')
+        self.window.geometry('500x435+730+400')
         self.window.title('Товары')
         self.window.resizable(False, False)
 
@@ -32,7 +32,8 @@ class GoodsWindow:
                                          bd=2,
                                          selectmode='single',
                                          activestyle='none',
-                                         font=('Courier New', 10, 'bold')
+                                         font=('Courier New', 10, 'bold'),
+                                         bg='#dfefef'
                                          )
         self.scrollbar = tk.Scrollbar(self.frame, orient='vertical')
         self.scrollbar.config(command=self.lbox_data_rows.yview)
@@ -177,7 +178,7 @@ class GoodsxWindow:
         self.parent = parent
 
         self.window = tk.Toplevel()
-        self.window.geometry('560x250')
+        self.window.geometry('560x250+730+585')
         self.window.title(title_text)
         self.window.resizable(False, False)
 
@@ -188,7 +189,7 @@ class GoodsxWindow:
                              fg='#0000cc',
                              justify='center'
                              )
-        lbl_title.place(x=60, y=15, width=450, height=50)
+        lbl_title.place(x=55, y=15, width=450, height=50)
 
         # Добавление полей ввода
         lbl_name = tk.Label(self.window,

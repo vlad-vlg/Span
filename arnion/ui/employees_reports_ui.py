@@ -8,7 +8,7 @@ class EmployeesReportWindow:
 
     def __init__(self):
         self.window = tk.Toplevel()
-        self.window.geometry('500x450')
+        self.window.geometry('500x435+730+400')
         self.window.title('Отчет: Сотрудники')
         self.window.resizable(False, False)
 
@@ -23,7 +23,7 @@ class EmployeesReportWindow:
         # Добавление окна вывода текста
         self.txt_output = st(self.window, font=('Courier New', 10, 'bold'))
         self.txt_output.insert(tk.END, self.get_report_text())
-        self.txt_output.place(x=15, y=75, width=470, height=310)
+        self.txt_output.place(x=15, y=75, width=470, height=300)
 
         # Добавление кнопки закрытия окна
         self.btn_close = tk.Button(self.window, text='Закрыть',
@@ -36,7 +36,7 @@ class EmployeesReportWindow:
                                    activeforeground='white',
                                    command=self.close
                                    )
-        self.btn_close.place(x=190, y=400, width=90, height=30)
+        self.btn_close.place(x=190, y=390, width=90, height=30)
 
     def get_report_text(self):
         report_text = ' ' * 17 + 'Сотрудники по отделам' + os.linesep
