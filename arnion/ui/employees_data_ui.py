@@ -211,18 +211,18 @@ class EmployeeWindow:
         self.ent_middle_name.insert(tk.END, data_row.middle_name)
 
         lbl_last_name = tk.Label(self.window,
-                                   text='Фамилия:',
-                                   font=('Helvetica', 10, 'bold')
-                                   )
+                                 text='Фамилия:',
+                                 font=('Helvetica', 10, 'bold')
+                                 )
         lbl_last_name.place(x=20, y=155)
         self.ent_last_name = tk.Entry(self.window, font=('Helvetica', 10, 'bold'))
         self.ent_last_name.place(x=115, y=155, width=370, height=25)
         self.ent_last_name.insert(tk.END, data_row.last_name)
 
         lbl_department = tk.Label(self.window,
-                                   text='Отдел:',
-                                   font=('Helvetica', 10, 'bold')
-                                   )
+                                  text='Отдел:',
+                                  font=('Helvetica', 10, 'bold')
+                                  )
         lbl_department.place(x=20, y=190)
         self.cbo_department = ttk.Combobox(self.window, font=('Helvetica', 10, 'bold'))
         self.init_combobox()
@@ -284,7 +284,6 @@ class EmployeeWindow:
             return self.cbox_ids[id_index]
         except ValueError as e:
             return 0
-        pass
 
     # Функция открытия окна
     def open(self):

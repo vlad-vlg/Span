@@ -1,4 +1,5 @@
 import tkinter as tk
+from tkinter import ttk
 from datetime import date as d
 from arnion.db.mysql_connection import ConnectionHandler
 from arnion.data.departments_data import DepartmentDataHandler, DepartmentDataObject
@@ -178,10 +179,10 @@ class MainWindow:
         btn_close.place(x=170, y=360, width=120, height=40)
 
     # Функция "Тест"
-    def do_test(self):
-        ch = ConnectionHandler()
-        ch.do_test()
-        print('-' * 30)
+    # def do_test(self):
+    #     ch = ConnectionHandler()
+    #     ch.do_test()
+    #     print('-' * 30)
 #        departments = DepartmentDataHandler.select_list()
 #        for department in departments:
 #            print(department.department_name)
@@ -194,11 +195,11 @@ class MainWindow:
 #        for good in goods:
 #            print(good.get_goods_price())
 #        print('-' * 30)
-        orders = OrderDataHandler.select_list()
-        print("Код товара", "Количество", "Дата заказа", sep='\t' * 2)
-        for order in orders:
-            print(order.goods_id, order.quantity, order.date_of_order, sep='\t' * 4)
-        print('-' * 30)
+#         orders = OrderDataHandler.select_list()
+#         print("Код товара", "Количество", "Дата заказа", sep='\t' * 2)
+#         for order in orders:
+#             print(order.goods_id, order.quantity, order.date_of_order, sep='\t' * 4)
+#         print('-' * 30)
 #       OrderDataHandler.delete_by_id(1)
 #        print('Готово!')
 #        print('-' * 30)
@@ -209,14 +210,14 @@ class MainWindow:
 #        OrderDataHandler.update(order)
 #        print('Готово!')
 #        print('-' * 30)
-        order = OrderDataObject(order_number='№05-2023',
-                                goods_id=4,
-                                quantity=5,
-                                date_of_order='2023-12-05 10:36:27')
-        print(order.order_id)
-        OrderDataHandler.insert(order)
-        print(order.order_id)
-        print('Готово!')
+#         order = OrderDataObject(order_number='№05-2023',
+#                                 goods_id=4,
+#                                 quantity=5,
+#                                 date_of_order='2023-12-05 10:36:27')
+#         print(order.order_id)
+#         OrderDataHandler.insert(order)
+#         print(order.order_id)
+#         print('Готово!')
 
     # Открытие списка "Отделы"
     def do_list_departments(self):

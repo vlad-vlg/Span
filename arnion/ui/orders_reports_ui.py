@@ -40,15 +40,15 @@ class OrdersReportWindow:
 
     def get_report_text(self):
         report_text = ' ' * 30 + 'Заказы по категориям' + os.linesep * 2
-        report_text += 'Код' + '\t' + '  Номер' + '\t   ' + 'Наименование' + '\t' * 5 + 'Количество' + '\t' + 'Сумма' + os.linesep
-        report_text += 'категории' + '\t' + 'заказа' + '\t  ' + 'товара' + os.linesep
-        report_text += '-' * 74 + os.linesep
+        report_text += 'Категория' + '\t' + '  Номер' + '\t   ' + 'Наименование' + '\t' * 5 + 'Количество' + '\t' + 'Сумма' + os.linesep
+        report_text += 'товара' + '\t    ' + 'заказа' + '\t  ' + 'товара' + os.linesep
+        report_text += '-' * 74
         data_rows = OrderDataHandler.select_list_rpt()
         current_goods_category_id = '#-#-#'
         for data_row in data_rows:
             # Если новая категория товара, добавляется заголовок группы
             if data_row.goods_category_id != current_goods_category_id:
-                report_text += str(data_row.goods_category_id) + os.linesep
+                report_text += os.linesep + data_row.goods_category_name + os.linesep * 2
                 current_goods_category_id = data_row.goods_category_id
             # Добавляется запись
             report_text += '\t  ' + data_row.order_number + '\t ' + data_row.goods_name + '\t' * 5 + str(data_row.quantity) + '\t' + str(data_row.quantity * data_row.price) + os.linesep

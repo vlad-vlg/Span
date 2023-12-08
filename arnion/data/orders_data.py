@@ -9,15 +9,23 @@ class OrderDataObject:
         self.quantity = quantity
         self.date_of_order = date_of_order
 
+    def get_order_data(self):
+        order_data = self.order_number + ' | ' + str(self.goods_id) + ' | ' + str(self.quantity) + ' | ' + str(self.date_of_order)
+        return order_data
+
 
 class OrderRptDataObject(OrderDataObject):
     def __init__(self, order_id=0, order_number='', goods_id=0, quantity=1, date_of_order='0000-00-00 00:00:00', goods_category_id=0,
-                 goods_name='', price=0.00):
+                 goods_name='', price=0.00, goods_category_name=''):
         super().__init__(order_id, order_number, goods_id, quantity, date_of_order)
         self.goods_category_id = goods_category_id
         self.goods_name = goods_name
         self.price = price
+        self.goods_category_name = goods_category_name
 
+    def get_order_data(self):
+        order_data = self.order_number + ' | ' + self.goods_name + ' | ' + str(self.quantity) + ' | ' + str(self.date_of_order)
+        return order_data
 
 class OrderDataHandler:
     @staticmethod
@@ -57,11 +65,13 @@ class OrderDataHandler:
         orders = []
         try:
             with my_connection_handler.get_connection() as cnn:
-                select_query = "SELECT o.*, g.goods_category_id, g.goods_name, g.price " \
+                select_query = "SELECT o.*, g.goods_category_id, g.goods_name, g.price, cat.goods_category_name "\
                                "FROM goods g " \
                                "JOIN orders o " \
                                "ON o.goods_id = g.goods_id " \
-                               "ORDER BY goods_category_id, goods_name"
+                                "JOIN goods_categories cat " \
+                                "ON cat.goods_category_id = g.goods_category_id "\
+                               "ORDER BY goods_category_id, order_number"
                 with cnn.cursor() as cursor:
                     cursor.execute(select_query)
                     result = cursor.fetchall()
@@ -73,7 +83,7 @@ class OrderDataHandler:
 
     @staticmethod
     def get_order_rpt(row):
-        return OrderRptDataObject(row[0], row[1], row[2], row[3], row[4], row[5], row[6], row[7])
+        return OrderRptDataObject(row[0], row[1], row[2], row[3], row[4], row[5], row[6], row[7], row[8])
 
     @staticmethod
     def delete_by_id(order_id: int):
@@ -104,7 +114,8 @@ class OrderDataHandler:
     def insert(order: OrderDataObject):
         try:
             with my_connection_handler.get_connection() as cnn:
-                insert_query = "INSERT INTO orders (order_number, goods_id, quantity, date_of_order) VALUES ('"\
+                insert_query = "INSERT INTO orders (order_number, goods_id, quantity, date_of_order) "\
+                                "VALUES ('"\
                                + order.order_number + "', "\
                                + str(order.goods_id) + ", "\
                                + str(order.quantity) + ", '"\

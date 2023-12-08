@@ -2,6 +2,8 @@ import copy
 import tkinter as tk
 from tkinter import ttk
 from tkinter import messagebox as mb
+
+from arnion.data.goods_data import GoodsxDataHandler
 from arnion.data.orders_data import OrderDataHandler, OrderRptDataObject, OrderDataObject
 
 
@@ -32,7 +34,7 @@ class OrdersWindow:
                                          activestyle='none',
                                          font=('Courier New', 10, 'bold')
                                          )
-        self.scrollbar = tk.Scrollbar(self.frame, orient='vertical')
+        self.scrollbar = ttk.Scrollbar(self.frame, orient='vertical')
         self.scrollbar.config(command=self.lbox_data_rows.yview)
         self.scrollbar.place(x=600, y=0, width=20, height=300)
         self.lbox_data_rows.config(yscrollcommand=self.scrollbar.set)
@@ -98,17 +100,15 @@ class OrdersWindow:
 
     # Функция заполнения списка
     def init_data_rows(self):
-        self.data_rows = OrderDataHandler.select_list_rpt()
+        self.data_rows = OrderDataHandler.select_list()
         for data_rows in self.data_rows:
-            self.lbox_data_rows.insert('end', str(data_rows.order_number) + ' | ' +
-                                       str(data_rows.goods_name) + ' | ' + str(data_rows.quantity) + ' | ' +
-                                       str(data_rows.date_of_order))
+            self.lbox_data_rows.insert('end', data_rows.get_order_data())
         if len(self.data_rows) > 0:
             self.lbox_data_rows.select_set(0)
 
     # Функция добавления записи
     def add_record(self):
-        self.data_row = OrderRptDataObject()
+        self.data_row = OrderDataObject()
         self.record_window = OrderWindow(True, self.data_row, self)
         self.record_window.open()
 
@@ -116,7 +116,7 @@ class OrdersWindow:
     def add_record_callback(self, added_data_row: OrderDataObject):
         OrderDataHandler.insert(added_data_row)
         self.data_rows.append(added_data_row)
-        self.lbox_data_rows.insert('end', added_data_row.goods_id)
+        self.lbox_data_rows.insert('end', added_data_row.get_order_data())
         self.lbox_data_rows.selection_clear(0, 'end')
         self.lbox_data_rows.selection_set('end')
 
@@ -131,7 +131,7 @@ class OrdersWindow:
     def edit_record_callback(self, edited_data_row: OrderDataObject):
         OrderDataHandler.update(edited_data_row)
         self.data_rows[self.selection] = edited_data_row
-        self.refresh_listbox(self.selection, edited_data_row.order_number)
+        self.refresh_listbox(self.selection, edited_data_row.get_order_data())
 
     # Функция удаления записи
     def delete_record(self):
@@ -165,7 +165,7 @@ class OrdersWindow:
 
 class OrderWindow:
     # Конструктор
-    def __init__(self, add_new: bool, data_row: OrderRptDataObject, parent: OrdersWindow):
+    def __init__(self, add_new: bool, data_row: OrderDataObject, parent: OrdersWindow):
 
         if add_new:
             title_text = 'Новый заказ'
@@ -210,7 +210,7 @@ class OrderWindow:
         self.init_combobox()
         # Запрет на ввод произвольных значений
         self.cbo_goods_name['state'] = 'readonly'
-        self.set_id_to_combobox(data_row.goods_name)
+        self.set_id_to_combobox(data_row.goods_id)
         self.cbo_goods_name.place(x=175, y=120, width=370, height=25)
 
         lbl_quantity = tk.Label(self.window,
@@ -263,7 +263,7 @@ class OrderWindow:
     def init_combobox(self):
         self.cbox_ids = []
         self.cbox_values = []
-        data_rows = OrderDataHandler.select_list_rpt()
+        data_rows = GoodsxDataHandler.select_list()
         for data_row in data_rows:
             self.cbox_ids.append(data_row.goods_id)
             self.cbox_values.append(data_row.goods_name)
@@ -308,6 +308,6 @@ class OrderWindow:
     # Функция сбора информации с полей ввода
     def collect_from_controls(self):
         self.data_row.order_number = str(self.ent_order_number.get())
-        self.data_row.order_number = str(self.get_id_from_combobox(self.cbo_goods_name.get()))
-        self.data_row.order_number = str(self.ent_quantity.get())
-        self.data_row.order_number = str(self.ent_date_of_order.get())
+        self.data_row.goods_id = str(self.get_id_from_combobox(self.cbo_goods_name.get()))
+        self.data_row.quantity = str(self.ent_quantity.get())
+        self.data_row.date_of_order = str(self.ent_date_of_order.get())
