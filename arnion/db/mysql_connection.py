@@ -40,6 +40,7 @@ class ConnectionHandler:
             database=self.database,
             user=self.user,
             password=self.password,
+            autocommit=True
         )
 
 

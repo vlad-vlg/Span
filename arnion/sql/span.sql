@@ -6,7 +6,7 @@ CREATE TABLE IF NOT EXISTS `departments` (
     `department_id` INT(11) NOT NULL AUTO_INCREMENT,
     `department_name` VARCHAR(250) NOT NULL DEFAULT '',
     PRIMARY KEY (`department_id`)
-    ) ENGINE=MYISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+    ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 DROP TABLE IF EXISTS `employees`;
 CREATE TABLE IF NOT EXISTS `employees` (
@@ -16,7 +16,7 @@ CREATE TABLE IF NOT EXISTS `employees` (
     `last_name` VARCHAR(100) NOT NULL DEFAULT '',
     `department_id` INT(11) NOT NULL DEFAULT 0,
     PRIMARY KEY (`employee_id`)
-    ) ENGINE=MYISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+    ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 INSERT INTO departments (department_name)
 VALUES ('Бухгалтерия'),
@@ -38,7 +38,7 @@ CREATE TABLE IF NOT EXISTS `goods` (
   `goods_name` VARCHAR(255) NOT NULL DEFAULT '' COMMENT 'Название товара',
   `price` DECIMAL(10,2) DEFAULT 0.00 COMMENT 'Цена товара',
   PRIMARY KEY (`goods_id`)
-) ENGINE=MYISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 DROP TABLE IF EXISTS `orders`;
 CREATE TABLE IF NOT EXISTS `orders` (
@@ -48,14 +48,14 @@ CREATE TABLE IF NOT EXISTS `orders` (
   `quantity` INT(11) DEFAULT 1 COMMENT 'Количество товара',
   `date_of_order` DATETIME DEFAULT '0000-00-00 00:00:00' COMMENT 'Дата заказа',
   PRIMARY KEY (`order_id`)
-  ) ENGINE=MYISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+  ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 DROP TABLE IF EXISTS `goods_categories`;
 CREATE TABLE IF NOT EXISTS `goods_categories` (
     `goods_category_id` INT(11) NOT NULL AUTO_INCREMENT,
     `goods_category_name` VARCHAR(250) NOT NULL DEFAULT '',
     PRIMARY KEY (`goods_category_id`)
-    ) ENGINE=MYISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+    ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 INSERT INTO goods (goods_category_id, goods_name, price)
 VALUES (1, 'Электронная книга', 1000),
